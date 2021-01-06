@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="f5c85160-494e-4790-aa88-df3e796f5b40" />
+      <option name="name" value="f5c85160-494e-4790-aa88-df3e796f5b40" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="94c0362d-26d4-4953-bd0d-19881a414a5d" />
+      <option name="name" value="94c0362d-26d4-4953-bd0d-19881a414a5d" />
+      <option name="url" value="https://jcenter.bintray.com" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="9a647993-08af-43dd-aa47-2b2b2beb9d59" />
+      <option name="name" value="9a647993-08af-43dd-aa47-2b2b2beb9d59" />
+      <option name="url" value="https://repo.dmulloy2.net/nexus/repository/public/" />
+    </remote-repository>
+  </component>
+</project>

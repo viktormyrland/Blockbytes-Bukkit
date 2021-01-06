@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LuckPerms-Bukkit-5.1.84">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.LIB/minecraft/plugins/LuckPerms-Bukkit-5.1.84.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

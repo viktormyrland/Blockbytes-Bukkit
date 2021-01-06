@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="com.comphenix.protocol:ProtocolLib:4.4.0" type="repository">
+    <properties maven-id="com.comphenix.protocol:ProtocolLib:4.4.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/comphenix/protocol/ProtocolLib/4.4.0/ProtocolLib-4.4.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/comphenix/protocol/ProtocolLib-API/4.4.0/ProtocolLib-API-4.4.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/cglib/cglib-nodep/3.2.5/cglib-nodep-3.2.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/comphenix/executors/BukkitExecutors/1.1-SNAPSHOT/BukkitExecutors-1.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cglib/cglib-nodep/3.2.5/cglib-nodep-3.2.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

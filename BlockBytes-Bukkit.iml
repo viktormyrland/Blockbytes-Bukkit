@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="com.comphenix.protocol:ProtocolLib:4.4.0" level="project" />
+    <orderEntry type="library" name="com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="net.lingala.zip4j:zip4j:1.3.2" level="project" />
+    <orderEntry type="library" name="spigot-1_12_R1" level="project" />
+    <orderEntry type="library" name="spigot-1_15_R1" level="project" />
+    <orderEntry type="library" name="spigot-1_16_R2" level="project" />
+    <orderEntry type="library" name="LuckPerms-Bukkit-5.1.84" level="project" />
+    <orderEntry type="library" name="PlotSquared-Bukkit-3.809" level="project" />
+    <orderEntry type="library" name="EssentialsXSpawn-2.17.2.0" level="project" />
+    <orderEntry type="library" name="com.github.WesJD.AnvilGUI:anvilgui:master-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="EssentialsX-2.17.2.0" level="project" />
+    <orderEntry type="library" name="io.lettuce:lettuce-core:6.0.1.RELEASE" level="project" />
+  </component>
+</module>
