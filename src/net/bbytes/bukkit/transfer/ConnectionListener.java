@@ -3,8 +3,8 @@ package net.bbytes.bukkit.transfer;
 
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.project.Project;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
-import net.bbytes.bukkit.world.HoneyfrostWorldType;
+import net.bbytes.bukkit.world.ConfigurableWorld;
+import net.bbytes.bukkit.world.ConfigurableWorldType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -58,70 +58,70 @@ public class ConnectionListener implements Runnable {
 
             try(DataInputStream in = new DataInputStream(new ByteArrayInputStream(b))){
                 switch(initialByte){
-                    case 0x01:{
-                        Main.getInstance().getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[HFTransfer] Authenticated");
-                        Main.getInstance().getBbConnector().setDisconnected(false);
-                        break;
-                    }
-                    case 0x02:{
-                        String worldID = in.readUTF();
-                        String displayname = in.readUTF();
-                        ItemStack displayItem = Main.getInstance().getItemStackUtils().deserializeItemStack(in.readUTF(), true);
-                        HoneyfrostWorldType type = HoneyfrostWorldType.valueOf(in.readUTF());
-                        World.Environment environment = World.Environment.valueOf(in.readUTF());
-                        Project project = Project.getProject(in.readUTF());
-                        long seed = in.readLong();
-
-                        new File(Bukkit.getWorldContainer() + "/" + worldID + "/uid.dat").delete();
-
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().newWorld();
-                        world.setFileWorldName(worldID);
-                        world.setDisplayname(displayname);
-                        world.setDisplayItem(displayItem);
-                        world.getWorldProperties().setHoneyfrostWorldType(type);
-                        world.getWorldProperties().setEnvironment(environment);
-                        if(project != null)world.setProjectID(project.getUUID());
-                        world.getWorldProperties().setSeed(seed);
-                        break;
-                    }
-                    case 0x03:{
-                        Response response = Response.valueOf(in.readUTF());
-                        UUID playerID = UUID.fromString(in.readUTF());
-
-                        Player player = Bukkit.getPlayer(playerID);
-                        if(player != null){
-                            switch(response){
-                                case SERVER_DOWN:{
-                                    player.sendMessage("§cError: §4World could not be transferred: Target server is down.");
-                                    break;
-                                }
-                                case COPY_FAILED:{
-                                    player.sendMessage("§cError: §4World could not be transferred: COPY_FAILED");
-                                    break;
-                                }
-                                case SUCCESS:{
-                                    String worldID = in.readUTF();
-                                    HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
-                                    player.sendMessage(Main.getInstance().PREFIX + "The world §b" + world.getDisplayname() + " §6was transferred successfully.");
-                                    break;
-                                }
-                            }
-
-
-                        }
-
-
-
-                        break;
-                    }
-                    case 0x04:{
-                        String identifier = in.readUTF();
-                        String player = in.readUTF();
-                        String message = in.readUTF();
-                        Bukkit.broadcastMessage("§bDiscord §b§l" + identifier + " §3» §7" + player + " §8» §r" + message);
-
-                        break;
-                    }
+//                    case 0x01:{
+//                        Main.getInstance().getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[HFTransfer] Authenticated");
+//                        Main.getInstance().getBbConnector().setDisconnected(false);
+//                        break;
+//                    }
+//                    case 0x02:{
+//                        String worldID = in.readUTF();
+//                        String displayname = in.readUTF();
+//                        ItemStack displayItem = Main.getInstance().getItemStackUtils().deserializeItemStack(in.readUTF(), true);
+//                        ConfigurableWorldType type = ConfigurableWorldType.valueOf(in.readUTF());
+//                        World.Environment environment = World.Environment.valueOf(in.readUTF());
+//                        Project project = Project.getProject(in.readUTF());
+//                        long seed = in.readLong();
+//
+//                        new File(Bukkit.getWorldContainer() + "/" + worldID + "/uid.dat").delete();
+//
+//                        ConfigurableWorld world = Main.getInstance().getWorldManager().newWorld();
+//                        world.setFileWorldName(worldID);
+//                        world.setDisplayname(displayname);
+//                        world.setDisplayItem(displayItem);
+//                        world.getWorldProperties().setConfigurableWorldType(type);
+//                        world.getWorldProperties().setEnvironment(environment);
+//                        if(project != null)world.setProjectID(project.getUUID());
+//                        world.getWorldProperties().setSeed(seed);
+//                        break;
+//                    }
+//                    case 0x03:{
+//                        Response response = Response.valueOf(in.readUTF());
+//                        UUID playerID = UUID.fromString(in.readUTF());
+//
+//                        Player player = Bukkit.getPlayer(playerID);
+//                        if(player != null){
+//                            switch(response){
+//                                case SERVER_DOWN:{
+//                                    player.sendMessage("§cError: §4World could not be transferred: Target server is down.");
+//                                    break;
+//                                }
+//                                case COPY_FAILED:{
+//                                    player.sendMessage("§cError: §4World could not be transferred: COPY_FAILED");
+//                                    break;
+//                                }
+//                                case SUCCESS:{
+//                                    String worldID = in.readUTF();
+//                                    ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
+//                                    player.sendMessage(Main.getInstance().PREFIX + "The world §b" + world.getDisplayname() + " §6was transferred successfully.");
+//                                    break;
+//                                }
+//                            }
+//
+//
+//                        }
+//
+//
+//
+//                        break;
+////                    }
+//                    case 0x04:{
+//                        String identifier = in.readUTF();
+//                        String player = in.readUTF();
+//                        String message = in.readUTF();
+//                        Bukkit.broadcastMessage("§bDiscord §b§l" + identifier + " §3» §7" + player + " §8» §r" + message);
+//
+//                        break;
+//                    }
                 }
             }
 

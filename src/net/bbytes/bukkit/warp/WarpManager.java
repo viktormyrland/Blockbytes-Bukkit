@@ -104,8 +104,8 @@ public class WarpManager {
     public List<Warp> getUncategorizedWarps(){
         List<Warp> warpList = new ArrayList<>();
         for(Warp warp : this.warpList) {
-            if (warp.getHoneyfrostWorld() != null)
-                if (warp.getHoneyfrostWorld().getProject() != null) {
+            if (warp.getConfigurableWorld() != null)
+                if (warp.getConfigurableWorld().getProject() != null) {
                     continue;
                 }
             warpList.add(warp);

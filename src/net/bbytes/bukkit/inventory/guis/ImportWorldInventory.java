@@ -2,7 +2,7 @@ package net.bbytes.bukkit.inventory.guis;
 
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorldType;
+import net.bbytes.bukkit.world.ConfigurableWorldType;
 import net.bbytes.bukkit.world.ImportWorldInfo;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -29,7 +29,7 @@ public class ImportWorldInventory extends BaseInventory{
 
         item = setNBT(item, "info.displayName", info.getDisplayname());
         item = setNBT(item, "info.worldID", info.getWorldID());
-        item = setNBT(item, "info.honeyfrostWorldType", info.getHoneyfrostWorldType().name());
+        item = setNBT(item, "info.configurableWorldType", info.getConfigurableWorldType().name());
         item = setNBT(item, "info.environment", info.getEnvironment().name());
         item = setNBT(item, "info.projectID", (info.getProject() != null ? info.getProject().getUUID().toString() : "none"));
         item = setNBT(item, "info.upload", info.isUpload());
@@ -57,16 +57,16 @@ public class ImportWorldInventory extends BaseInventory{
         setItem(inv, itemStackUtils.getItemStack(GUIItem.IMPORT_TYPE_FLAT, getMessage(Message.NEW_WORLD_FLAT), lore), 2, 4);
 
         setItem(inv, itemStackUtils.getItemStack(
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.NORMAL ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.NORMAL ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 2);
+                (info.getConfigurableWorldType() == ConfigurableWorldType.NORMAL ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
+                (info.getConfigurableWorldType() == ConfigurableWorldType.NORMAL ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 2);
 
         setItem(inv, itemStackUtils.getItemStack(
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.VOID ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.VOID ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 3);
+                (info.getConfigurableWorldType() == ConfigurableWorldType.VOID ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
+                (info.getConfigurableWorldType() == ConfigurableWorldType.VOID ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 3);
 
         setItem(inv, itemStackUtils.getItemStack(
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.FLAT ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
-                (info.getHoneyfrostWorldType() == HoneyfrostWorldType.FLAT ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 4);
+                (info.getConfigurableWorldType() == ConfigurableWorldType.FLAT ? GUIItem.IMPORT_ENABLED : GUIItem.IMPORT_DISABLED),
+                (info.getConfigurableWorldType() == ConfigurableWorldType.FLAT ? getMessage(Message.WORD_ENABLED) : getMessage(Message.WORD_DISABLED))), 3, 4);
 
         lore = new String[]{
                 Message.FORMAT_DIVIDER.getRaw(),

@@ -3,7 +3,7 @@ package net.bbytes.bukkit.inventory.guis;
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -16,14 +16,14 @@ public class TransferWorldInventory extends BaseInventory {
     public Inventory getInventory(Player player, Object... options){
         setPlayer(player);
         String worldID = (String) options[0];
-        HoneyfrostWorld honeyfrostWorld = HoneyfrostWorld.getWorld(worldID);
+        ConfigurableWorld configurableWorld = ConfigurableWorld.getWorld(worldID);
 
         Inventory inv = createInventory(5, getMessage(Message.WORLD_EDIT_TRANSFER));
 
-        ItemStack item = itemStackUtils.getItemStack(honeyfrostWorld.getDisplayItem(), honeyfrostWorld.getDisplayname(), new String[]{
+        ItemStack item = itemStackUtils.getItemStack(configurableWorld.getDisplayItem(), configurableWorld.getDisplayname(), new String[]{
                 Message.FORMAT_DIVIDER.getRaw(),
-                "§8§l» §7" + getMessage(Message.WORD_WORLD) + ": §b" + honeyfrostWorld.getDisplayname(),
-                "§8§l» §7" + getMessage(Message.WORD_PROJECT) + ": §b" + (honeyfrostWorld.getProject() != null ? honeyfrostWorld.getProject().getName() : "none"),
+                "§8§l» §7" + getMessage(Message.WORD_WORLD) + ": §b" + configurableWorld.getDisplayname(),
+                "§8§l» §7" + getMessage(Message.WORD_PROJECT) + ": §b" + (configurableWorld.getProject() != null ? configurableWorld.getProject().getName() : "none"),
                 "",
                 "\\" + getMessage(Message.TRANSFER_INFO)
         });

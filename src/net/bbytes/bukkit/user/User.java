@@ -4,7 +4,7 @@ import com.mojang.authlib.properties.Property;
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.warp.Warp;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,7 +26,7 @@ public class User {
 
     private final Player player;
     private Language language = Language.ENGLISH;
-    private List<HoneyfrostWorld> recentWorlds = new ArrayList<>();
+    private List<ConfigurableWorld> recentWorlds = new ArrayList<>();
     private List<Warp> recentWarps = new ArrayList<>();
 
     private Project projectToUpload = null;
@@ -42,7 +42,7 @@ public class User {
                     if(rs.getString("RecentWorlds" + Main.getInstance().getSubversion()) != null)
                         if(!rs.getString("RecentWorlds" + Main.getInstance().getSubversion()).equals(" "))
                             for(String id : rs.getString("RecentWorlds" + Main.getInstance().getSubversion()).split(";")){
-                                HoneyfrostWorld hw = HoneyfrostWorld.getWorld(id);
+                                ConfigurableWorld hw = ConfigurableWorld.getWorld(id);
                                 if(hw != null) {
                                     recentWorlds.add(hw);
                                 }
@@ -64,7 +64,7 @@ public class User {
     }
 
     public void saveUser_Sync() throws SQLException {
-        ResultSet rs = Main.getInstance().getMySQLManager().mysql.getMySQL().query("SELECT Language FROM Honeyfrost.Users WHERE UUID='" + player.getUniqueId().toString()+ "';");
+        ResultSet rs = Main.getInstance().getMySQLManager().mysql.getMySQL().query("SELECT Language FROM Users WHERE UUID='" + player.getUniqueId().toString()+ "';");
 
         StringBuilder worldBuilder = new StringBuilder();
         for(int i = 0; i < recentWorlds.size(); i++){
@@ -80,13 +80,13 @@ public class User {
         }
 
         if(rs.next()){
-            Main.getInstance().getMySQLManager().mysql.getMySQL().queryUpdate("UPDATE Honeyfrost.Users SET " +
+            Main.getInstance().getMySQLManager().mysql.getMySQL().queryUpdate("UPDATE Users SET " +
                     "Language='" + language.getID() + "', " +
                     "RecentWorlds" + Main.getInstance().getSubversion() + "='" + worldBuilder.toString() + "', " +
                     "RecentWarps" + Main.getInstance().getSubversion() + "='" + warpBuilder.toString() + "' " +
                     "WHERE UUID='" + player.getUniqueId().toString() + "';");
         }else{
-            Main.getInstance().getMySQLManager().mysql.getMySQL().queryUpdate("INSERT INTO Honeyfrost.Users (Language, RecentWorlds" + Main.getInstance().getSubversion() + ", RecentWarps" + Main.getInstance().getSubversion() + ", UUID) VALUES (" +
+            Main.getInstance().getMySQLManager().mysql.getMySQL().queryUpdate("INSERT INTO Users (Language, RecentWorlds" + Main.getInstance().getSubversion() + ", RecentWarps" + Main.getInstance().getSubversion() + ", UUID) VALUES (" +
                     "'" + language.getID() + "', " +
                     "'" + worldBuilder.toString() + "', " +
                     "'" + warpBuilder.toString() + "', " +
@@ -106,11 +106,11 @@ public class User {
         this.language = language;
     }
 
-    public List<HoneyfrostWorld> getRecentWorlds() {
+    public List<ConfigurableWorld> getRecentWorlds() {
         return recentWorlds;
     }
 
-    public void setRecentWorlds(List<HoneyfrostWorld> recentWorlds) {
+    public void setRecentWorlds(List<ConfigurableWorld> recentWorlds) {
         this.recentWorlds = recentWorlds;
     }
 
@@ -118,9 +118,9 @@ public class User {
         return Main.getInstance().getUserManager().getUser(player);
     }
 
-    public void logWorld(HoneyfrostWorld honeyfrostWorld) {
-        recentWorlds.removeIf(world -> world.getFileWorldName().equals(honeyfrostWorld.getFileWorldName()));
-        recentWorlds.add(0, honeyfrostWorld);
+    public void logWorld(ConfigurableWorld configurableWorld) {
+        recentWorlds.removeIf(world -> world.getFileWorldName().equals(configurableWorld.getFileWorldName()));
+        recentWorlds.add(0, configurableWorld);
     }
 
     public void logWarp(Warp warp) {

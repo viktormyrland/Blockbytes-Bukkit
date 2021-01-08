@@ -53,7 +53,7 @@ public class NewWorldInventory extends BaseInventory {
                 "§2§l» §a" + getMessage(Message.NEW_WORLD_IMPORT_CREATE)
         }), 3, 8);
 
-        if(player.hasPermission("honeyfrost.manager"))
+        if(player.hasPermission("bbytes.admin"))
             setItem(inv, itemStackUtils.getItemStack(GUIItem.NEW_WORLD_IMPORT, getMessage(Message.NEW_WORLD_IMPORT), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
                     "§8[§c" + getMessage(Message.INFO_ADMIN_ONLY) + "§8]",

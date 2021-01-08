@@ -27,7 +27,7 @@ public class WhitelistCommand implements CommandExecutor,TabCompleter{
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
 		
-		if(!sender.hasPermission("honeyfrost.admin")) {
+		if(!sender.hasPermission("bbytes.admin")) {
 			sender.sendMessage(Message.NO_PERMISSION.get(sender));
 			return true;
 		}
@@ -233,7 +233,7 @@ public class WhitelistCommand implements CommandExecutor,TabCompleter{
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> list = new ArrayList<String>();
-		if(sender.hasPermission("honeyfrost.admin")) {
+		if(sender.hasPermission("bbytes.admin")) {
 			if(args.length == 1) {
 				list.add("add");
 				list.add("remove");			

@@ -1,6 +1,7 @@
 package net.bbytes.bukkit.listeners;
 
 import net.bbytes.bukkit.Main;
+import net.bbytes.bukkit.command.PrefixCommand;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -14,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.security.GeneralSecurityException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -35,11 +37,11 @@ public class PlayerChatListener implements Listener{
 //					continue;
 //				}
 		
-		if(!e.getPlayer().hasPermission("honeyfrost.allowchat")) {
-			e.getPlayer().sendMessage("§cYou are silenced and cannot send or receive chat messages.");
-			e.setCancelled(true);
-			return;
-		}
+//		if(!e.getPlayer().hasPermission("honeyfrost.allowchat")) {
+//			e.getPlayer().sendMessage("§cYou are silenced and cannot send or receive chat messages.");
+//			e.setCancelled(true);
+//			return;
+//		}
 		
 		if(e.isCancelled())
 			return;
@@ -80,16 +82,18 @@ public class PlayerChatListener implements Listener{
 		}
 		suffix = suffix.replaceAll("&", "§");
 
-		String prefix = Main.getInstance().getLuckPerms().getUserManager().getUser(e.getPlayer().getUniqueId()).getCachedData().getMetaData().getPrefix();
-		if(prefix == null) prefix = "";
+
+		String prefix = PrefixCommand.getPrefix(Objects.requireNonNull(Main.getInstance().getLuckPerms().getUserManager().getUser(e.getPlayer().getUniqueId())).getCachedData().getMetaData().getMetaValue("prefix"));
+
+		if(prefix == null || prefix.isEmpty()) prefix = "";
+		else prefix = "§8«" + prefix + "§8» ";
 		prefix = prefix.replaceAll("&", "§");
 
+
 		e.setMessage(e.getMessage().replaceAll("&", "§"));
-
-
 		e.setMessage(e.getMessage().replaceAll("%", "%%"));
 
-		String msg = "§8«" + prefix + "§8» §7" + e.getPlayer().getDisplayName().replaceAll("&", "§") + suffix + "§7: §f" + e.getMessage();
+		String msg = prefix + "§7" + e.getPlayer().getDisplayName().replaceAll("&", "§") + suffix + "§7: §f" + e.getMessage();
 
 
 		e.setFormat(msg);
@@ -106,64 +110,35 @@ public class PlayerChatListener implements Listener{
 			if(Main.getInstance().getTwoFactorUtils().notAuthenticatedUsers.contains(p)) {
 				e.getRecipients().remove(p);
 			}
-			if(!p.hasPermission("honeyfrost.allowchat"))
-				e.getRecipients().remove(p);
 		}
 	}
 	
-	@EventHandler
-	public void onManagerScream(AsyncPlayerChatEvent e) {
-		
-		if(!e.getPlayer().hasPermission("honeyfrost.admin"))
-			return;
-		
-		String shout = "§4§l";
-		if(e.getPlayer().getName().equals("VenonCow"))
-			shout = "§3§l";
-		
-		StringBuilder newMessage = new StringBuilder();
-		boolean previousUppercase = false;
-		String[] msg = e.getMessage().split(" ");
-		for(String m : msg) {
-			if((isAllUpper(m) && m.length() > 1) || (isAllUpper(m) && previousUppercase)) {
-				newMessage.append(shout).append(m).append("§r ");
-				previousUppercase = true;
-			}else {
-				newMessage.append(m).append(" ");
-				previousUppercase = false;
-			}
-		}
-		
-		e.setMessage(newMessage.substring(0, newMessage.length() -1));
-	}
-	
-	@EventHandler
-	public void onPartyMode(AsyncPlayerChatEvent e) {
-		if(e.isCancelled())return;
-		if(e.getMessage().equalsIgnoreCase("party mode") && e.getPlayer().hasPermission("honeyfrost.chat.partymode")) {
-			e.setMessage("§c§lP§6§lA§e§lR§a§lT§b§lY §9§lM§d§lO§c§lD§6§lE§e§l!");
-			
-			Random rand = new Random();
-			//for(Player all : Bukkit.getOnlinePlayers()) {
-			Player all = e.getPlayer();
-				for(int i = 0; i < 50; i++)
-					all.spawnParticle(Particle.REDSTONE, all.getLocation(), 0, rand.nextInt(200)+55, rand.nextInt(200)+55, rand.nextInt(200)+55, 1);
-				
-				Location loc = all.getLocation();
-		        Firework fw = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
-		        FireworkMeta fwm = fw.getFireworkMeta();
-		        
-		        fwm.setPower(2);
-		        fwm.addEffect(FireworkEffect.builder().withColor(Color.RED).flicker(true).withTrail().build());
-		        
-		        fw.setFireworkMeta(fwm);
-		        fw.detonate();
-			//}
-		        e.setCancelled(true);
-		}
-		
-		
-	}
+//	@EventHandler
+//	public void onManagerScream(AsyncPlayerChatEvent e) {
+//
+//		if(!e.getPlayer().hasPermission("bbytes.admin"))
+//			return;
+//
+//		String shout = "§4§l";
+//		if(e.getPlayer().getName().equals("VenonCow"))
+//			shout = "§3§l";
+//
+//		StringBuilder newMessage = new StringBuilder();
+//		boolean previousUppercase = false;
+//		String[] msg = e.getMessage().split(" ");
+//		for(String m : msg) {
+//			if((isAllUpper(m) && m.length() > 1) || (isAllUpper(m) && previousUppercase)) {
+//				newMessage.append(shout).append(m).append("§r ");
+//				previousUppercase = true;
+//			}else {
+//				newMessage.append(m).append(" ");
+//				previousUppercase = false;
+//			}
+//		}
+//
+//		e.setMessage(newMessage.substring(0, newMessage.length() -1));
+//	}
+
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void discordBotSend(AsyncPlayerChatEvent e){

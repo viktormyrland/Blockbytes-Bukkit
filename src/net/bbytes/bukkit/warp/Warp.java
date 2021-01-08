@@ -5,7 +5,7 @@ import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,7 +47,7 @@ public class Warp {
 
     public void goTo(Player player){
 
-        if(getHoneyfrostWorld() == null){
+        if(getConfigurableWorld() == null){
             Essentials ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
             ess.getUser(player).setLastLocation(player.getLocation());
 
@@ -56,24 +56,24 @@ public class Warp {
             User.getUser(player).logWarp(this);
             return;
         }
-        Project project = getHoneyfrostWorld().getProject();
+        Project project = getConfigurableWorld().getProject();
         if(project != null)
         if(!project.canAccess(player.getUniqueId())){
             player.sendMessage(Message.ERROR_NO_ACCESS_GOTO_WORLD.get(player));
             return;
         }
 
-        getHoneyfrostWorld().enterLocation(player, this.location);
+        getConfigurableWorld().enterLocation(player, this.location);
         player.sendMessage("§6" + Message.WARP_WARPING.get(player).replace("{warp}", "§c" + this.name + "§6"));
         User.getUser(player).logWarp(this);
 
     }
 
     public boolean canAccess(Player player){
-        if(getHoneyfrostWorld() == null){
+        if(getConfigurableWorld() == null){
             return true;
         }
-        Project project = getHoneyfrostWorld().getProject();
+        Project project = getConfigurableWorld().getProject();
         if(project != null)
             if(!project.canAccess(player.getUniqueId())){
                 return false;
@@ -82,8 +82,8 @@ public class Warp {
         return true;
     }
 
-    public HoneyfrostWorld getHoneyfrostWorld() {
-        return HoneyfrostWorld.getWorld(this.world);
+    public ConfigurableWorld getConfigurableWorld() {
+        return ConfigurableWorld.getWorld(this.world);
     }
 
     public Location createLocation(){

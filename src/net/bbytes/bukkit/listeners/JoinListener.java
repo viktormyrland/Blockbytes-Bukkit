@@ -28,15 +28,7 @@ public class JoinListener implements Listener{
 		Main.getInstance().getUserManager().addUser(e.getPlayer());
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void notifyConnector(PlayerJoinEvent e){
-		Main.getInstance().getBbConnector().sendData(0x05, new Object[]{
-				e.getPlayer().getName(),
-				"JOIN"
-		});
 
-
-	}
 
 
 	@EventHandler
@@ -47,7 +39,7 @@ public class JoinListener implements Listener{
 			};
 
 			if(!Arrays.asList(allowedusers).contains(e.getPlayer().getName())){
-				e.disallow(Result.KICK_OTHER, "\n\n§c§lHoneyfrost Studios is currently under maintenance");
+				e.disallow(Result.KICK_OTHER, "\n\n§c§The Blockbytes server is currently under maintenance");
 			}
 		}
 	}
@@ -57,12 +49,12 @@ public class JoinListener implements Listener{
 	@EventHandler
 	public void authenticateUser(PlayerJoinEvent e) {
 		
-		if(!e.getPlayer().hasPermission("honeyfrost.allowchat")) {
-			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-				Bukkit.broadcastMessage("§8[§6§lH§e§lF§8] §cPlayer " + e.getPlayer().getName() + " is silenced, and cannot send or read chat messages.");
-				}, 20);
-			
-		}
+//		if(!e.getPlayer().hasPermission("honeyfrost.allowchat")) {
+//			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+//				Bukkit.broadcastMessage("§8[§6§lH§e§lF§8] §cPlayer " + e.getPlayer().getName() + " is silenced, and cannot send or read chat messages.");
+//				}, 20);
+//
+//		}
 		Main.getInstance().getTwoFactorUtils().notAuthenticatedUsers.add(e.getPlayer());
 		
 		exec.execute(() -> {
@@ -73,7 +65,7 @@ public class JoinListener implements Listener{
 			if(Main.getInstance().getTwoFactorUtils().getSecretFromUUID(e.getPlayer().getUniqueId()) == null) {
 				Main.getInstance().getTwoFactorUtils().notAuthenticatedUsers.remove(e.getPlayer());
 				Bukkit.getScheduler().runTask(Main.getInstance(), () -> {e.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);});
-				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {e.getPlayer().sendMessage("§3[2FA] §c§lWARNING: §cYou do not have 2FA enabled.");}, 30);
+//				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {e.getPlayer().sendMessage("§3[2FA] §c§lWARNING: §cYou do not have 2FA enabled.");}, 30);
 			}else {
 				/*
 				 * If you have 2fa enabled
@@ -143,7 +135,7 @@ public class JoinListener implements Listener{
 			}
 
 		if(!exists)
-			e.disallow(Result.KICK_WHITELIST, "\n\n§c§lYou are not whitelisted on Honeyfrost Studios.");
+			e.disallow(Result.KICK_WHITELIST, "\n\n§c§lYou are not whitelisted on the Blockbytes server.");
 	}
 
 
@@ -158,6 +150,11 @@ public class JoinListener implements Listener{
 	@EventHandler
 	public void f3PermUpdate(PlayerJoinEvent e) {
 		Main.getInstance().getF3NPerm().update(e.getPlayer());
+	}
+
+	@EventHandler
+	public void announce(PlayerJoinEvent e) {
+		e.setJoinMessage("§8[§a§l+§8] §a" + e.getPlayer().getName());
 	}
 	
 	

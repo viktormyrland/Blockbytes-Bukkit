@@ -18,7 +18,7 @@ import java.util.Map;
 public enum Message {
 
     PROJECTS_TITLE("Projects"),
-    PROJECTS_PLUGIN_INFO("Navigate and manage worlds on the Honeyfrost server."),
+    PROJECTS_PLUGIN_INFO("Navigate and manage worlds on the Blockbytes server."),
     PROJECTS_RECYCLE_BIN("Recycle Bin"),
     PROJECTS_RECYCLE_BIN_INFO("Recover recently deleted worlds and projects"),
     PROJECTS_PLOT_WORLD("Plot World"),

@@ -2,7 +2,7 @@ package net.bbytes.bukkit.listeners;
 
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -12,7 +12,7 @@ public class TeleportListener implements Listener {
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e){
-        HoneyfrostWorld world = HoneyfrostWorld.getWorld(e.getTo().getWorld().getName());
+        ConfigurableWorld world = ConfigurableWorld.getWorld(e.getTo().getWorld().getName());
         if(world != null){
             if(world.getProject() != null) if(!world.getProject().canAccess(e.getPlayer().getUniqueId())){
                 e.setCancelled(true);

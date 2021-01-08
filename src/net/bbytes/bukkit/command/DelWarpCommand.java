@@ -20,7 +20,7 @@ public class DelWarpCommand implements CommandExecutor,TabCompleter, Listener {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 
-		if(!sender.hasPermission("honeyfrost.user")){
+		if(!sender.hasPermission("blockbytes.warp.manage")){
 			sender.sendMessage(Message.NO_PERMISSION.get(sender));
 			return true;
 		}

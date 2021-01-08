@@ -3,7 +3,7 @@ package net.bbytes.bukkit.inventory.guis;
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +23,7 @@ public class UncategorizedWorldsInventory extends BaseInventory {
         int page = (int) options[0];
         Inventory inv = createInventory(6, getMessage(Message.PROJECTS_UNCATEGORIZED_WORLDS));
 
-        List<HoneyfrostWorld> uncategorizedWorlds = Main.getInstance().getWorldManager().getUncategorizedWorlds();
+        List<ConfigurableWorld> uncategorizedWorlds = Main.getInstance().getWorldManager().getUncategorizedWorlds();
 
         setItem(inv, itemStackUtils.getItemStack(GUIItem.PROJECTS_UNCATEGORIZED_WORLDS, getMessage(Message.PROJECTS_UNCATEGORIZED_WORLDS), new String[]{
                 Message.FORMAT_DIVIDER.getRaw(),
@@ -45,7 +45,7 @@ public class UncategorizedWorldsInventory extends BaseInventory {
         List<ItemStack> itemStackList = new ArrayList<>();
 
         for(int i = (page-1)*28; i < uncategorizedWorlds.size(); i++){
-            HoneyfrostWorld world = uncategorizedWorlds.get(i);
+            ConfigurableWorld world = uncategorizedWorlds.get(i);
 
             ItemStack item = itemStackUtils.getItemStack(world.getDisplayItem(), "§6" + world.getDisplayname(), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),

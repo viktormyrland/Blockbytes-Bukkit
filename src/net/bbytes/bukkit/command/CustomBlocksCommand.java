@@ -38,7 +38,7 @@ public class CustomBlocksCommand implements CommandExecutor,TabCompleter, Listen
 		
 		if(customBlocksInventory != null) return customBlocksInventory;
 		
-		customBlocksInventory = Bukkit.createInventory(null, 45, "§cCustom Blocks");
+		customBlocksInventory = Bukkit.createInventory(null, 45, "§cOmega Parkour Custom Blocks");
 		
 	    this.customBlocksInventory.addItem(Main.getInstance().getItemStackUtils().getItemStack(Material.HUGE_MUSHROOM_2, "§7Red Mushroom", "100:14"));
 	    this.customBlocksInventory.addItem(Main.getInstance().getItemStackUtils().getItemStack(Material.QUARTZ_BLOCK, "§7White Mushroom", "100:15"));

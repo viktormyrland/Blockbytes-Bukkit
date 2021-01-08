@@ -15,10 +15,10 @@ public class ReloadBlockbytesCommand implements CommandExecutor,TabCompleter{
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
-		RankCommand.updateGroups();
-		PrefixCommand.updateGroups();
+//		RankCommand.updateGroups();
+		PrefixCommand.updateCache();
 		
-		sender.sendMessage("§aThe Honeyfrost plugin was reloaded");
+		sender.sendMessage("§aThe Blockbytes plugin was reloaded");
 			
 		
 		return true;

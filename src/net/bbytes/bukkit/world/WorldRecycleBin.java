@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class WorldRecycleBin {
 
-    private List<RecycledHoneyfrostWorld> recycledWorldsList = new ArrayList<>();
+    private List<RecycledConfigurableWorld> recycledWorldsList = new ArrayList<>();
 
     public WorldRecycleBin() {
         loadRecycleBin();
@@ -24,7 +24,7 @@ public class WorldRecycleBin {
 
     public void saveRecycleBin(){
         Map<String, Object> data = new HashMap<String, Object>();
-        for(RecycledHoneyfrostWorld hw : recycledWorldsList){
+        for(RecycledConfigurableWorld hw : recycledWorldsList){
             Map<String, Object> map = hw.serialize();
             map.put("recycled", hw.getRecycled());
             map.put("recycledBy", hw.getRecycledBy());
@@ -71,15 +71,15 @@ public class WorldRecycleBin {
             e.printStackTrace();
         }
 
-        List<RecycledHoneyfrostWorld> toRemove = new ArrayList<>();
+        List<RecycledConfigurableWorld> toRemove = new ArrayList<>();
 
-        for(RecycledHoneyfrostWorld world : recycledWorldsList){
+        for(RecycledConfigurableWorld world : recycledWorldsList){
             if(System.currentTimeMillis() - world.getRecycled() > TimeUnit.DAYS.toMillis(7)){
                 toRemove.add(world);
             }
         }
 
-        for(RecycledHoneyfrostWorld world : toRemove){
+        for(RecycledConfigurableWorld world : toRemove){
             recycledWorldsList.remove(world);
             File file = new File(Bukkit.getWorldContainer(), world.getFileWorldName());;
             if(file.isDirectory()) {
@@ -96,16 +96,16 @@ public class WorldRecycleBin {
 
 
     public void newWorld(Map<String, Object> map, String name){
-        RecycledHoneyfrostWorld hw = new RecycledHoneyfrostWorld(map, name);
+        RecycledConfigurableWorld hw = new RecycledConfigurableWorld(map, name);
         recycledWorldsList.add(hw);
     }
 
-    public List<RecycledHoneyfrostWorld> getRecycledWorldsList() {
+    public List<RecycledConfigurableWorld> getRecycledWorldsList() {
         return recycledWorldsList;
     }
 
-    public RecycledHoneyfrostWorld getWorld(String worldID){
-        for(RecycledHoneyfrostWorld world : recycledWorldsList)
+    public RecycledConfigurableWorld getWorld(String worldID){
+        for(RecycledConfigurableWorld world : recycledWorldsList)
             if(world.getFileWorldName().equals(worldID))
                 return world;
             return null;

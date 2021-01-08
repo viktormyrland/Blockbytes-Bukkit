@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class ImportWorldInfo {
 
-    private HoneyfrostWorldType honeyfrostWorldType = HoneyfrostWorldType.NORMAL;
+    private ConfigurableWorldType configurableWorldType = ConfigurableWorldType.NORMAL;
     private World.Environment environment = World.Environment.NORMAL;
     private String displayname = "Uploaded World";
     private Project project = null;
@@ -24,7 +24,7 @@ public class ImportWorldInfo {
 
 
 
-    public HoneyfrostWorld createWorld(Player player){
+    public ConfigurableWorld createWorld(Player player){
         if(upload){
             File SRC = new File(Main.getInstance().getDataFolder() + "/readyToUpload/" + this.worldID);
             File DEST = new File(Bukkit.getWorldContainer() + "/" + this.worldID);
@@ -39,18 +39,18 @@ public class ImportWorldInfo {
         }
 
 
-        HoneyfrostWorld honeyfrostWorld = new HoneyfrostWorld(this.worldID);
-        Main.getInstance().getWorldManager().getWorldList().add(honeyfrostWorld);
-        honeyfrostWorld.setDisplayname(this.displayname);
-        if(this.upload)honeyfrostWorld.setDisplayItem(new ItemStack(Material.BEACON));
-        honeyfrostWorld.getWorldProperties().setEnvironment(this.environment);
-        honeyfrostWorld.getWorldProperties().setHoneyfrostWorldType(this.honeyfrostWorldType);
+        ConfigurableWorld configurableWorld = new ConfigurableWorld(this.worldID);
+        Main.getInstance().getWorldManager().getWorldList().add(configurableWorld);
+        configurableWorld.setDisplayname(this.displayname);
+        if(this.upload) configurableWorld.setDisplayItem(new ItemStack(Material.BEACON));
+        configurableWorld.getWorldProperties().setEnvironment(this.environment);
+        configurableWorld.getWorldProperties().setConfigurableWorldType(this.configurableWorldType);
 
         if(project != null) {
-            honeyfrostWorld.setProjectID(project.getUUID());
+            configurableWorld.setProjectID(project.getUUID());
         }
 
-        return honeyfrostWorld;
+        return configurableWorld;
     }
 
     public void createWorldTeleport(Player player){
@@ -81,12 +81,12 @@ public class ImportWorldInfo {
 
     }
 
-    public HoneyfrostWorldType getHoneyfrostWorldType() {
-        return honeyfrostWorldType;
+    public ConfigurableWorldType getConfigurableWorldType() {
+        return configurableWorldType;
     }
 
-    public void setHoneyfrostWorldType(HoneyfrostWorldType honeyfrostWorldType) {
-        this.honeyfrostWorldType = honeyfrostWorldType;
+    public void setConfigurableWorldType(ConfigurableWorldType configurableWorldType) {
+        this.configurableWorldType = configurableWorldType;
     }
 
     public World.Environment getEnvironment() {

@@ -6,7 +6,7 @@ import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
 import net.bbytes.bukkit.util.BookUtil;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import net.bbytes.bukkit.world.ImportWorldInfo;
 import net.bbytes.bukkit.world.WorldUploader;
 import org.bukkit.command.Command;
@@ -25,10 +25,10 @@ public class WorldCommand implements CommandExecutor, TabCompleter{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(!sender.hasPermission("honeyfrost.user")){
-            sender.sendMessage(Message.NO_PERMISSION.get(sender));
-            return true;
-        }
+//        if(!sender.hasPermission("honeyfrost.user")){
+//            sender.sendMessage(Message.NO_PERMISSION.get(sender));
+//            return true;
+//        }
 
         if(!(sender instanceof Player)){
             sender.sendMessage("§cOnly executable by player");
@@ -36,11 +36,11 @@ public class WorldCommand implements CommandExecutor, TabCompleter{
         }
 
         if(args.length == 0){
-            sender.sendMessage("§3§lHoneyfrost Worlds");
+            sender.sendMessage("§3§lBlockbytes Worlds");
             sender.sendMessage("§8- §b/world download §8- §7" + Message.WORLD_DOWNLOAD.get(sender));
             sender.sendMessage("§8- §b/world upload §8- §7" + Message.WORLD_UPLOAD.get(sender));
         }else if(args[0].equalsIgnoreCase("download")){
-            HoneyfrostWorld world = HoneyfrostWorld.getWorld(((Player) sender).getWorld().getName());
+            ConfigurableWorld world = ConfigurableWorld.getWorld(((Player) sender).getWorld().getName());
             if(world == null){
                 sender.sendMessage(Message.ERROR_NONSUPPORT.get(sender));
                 return true;
@@ -109,7 +109,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter{
             }
 
             Project project = null;
-            HoneyfrostWorld world = HoneyfrostWorld.getWorld(((Player) sender).getWorld().getName());
+            ConfigurableWorld world = ConfigurableWorld.getWorld(((Player) sender).getWorld().getName());
             if(world != null)if(world.getProject() != null) project = world.getProject();
 
             BookUtil.openUploadBook((Player) sender);
@@ -118,7 +118,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter{
 
 
         }else{
-            sender.sendMessage("§3§lHoneyfrost Worlds");
+            sender.sendMessage("§3§lBlockbytes Worlds");
             sender.sendMessage("§8- §b/world download §8- §7Download the current world.");
             sender.sendMessage("§8- §b/world upload §8- §7Upload a world from your PC.");
         }

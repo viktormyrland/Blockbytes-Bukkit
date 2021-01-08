@@ -3,7 +3,7 @@ package net.bbytes.bukkit.inventory.guis;
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -54,7 +54,7 @@ public class ImportWorldChooseInventory extends BaseInventory {
         for(int i = (page-1)*28; i < worlds.size(); i++){
             File world = new File(Bukkit.getWorldContainer(), worlds.get(i));
             if(Bukkit.getWorld(world.getName()) != null) continue;
-            if(HoneyfrostWorld.getWorld(world.getName()) != null) continue;
+            if(ConfigurableWorld.getWorld(world.getName()) != null) continue;
             if(Main.getInstance().getWorldManager().getRecycleBin().getWorld(world.getName()) != null) continue;
             item = itemStackUtils.getItemStack(GUIItem.IMPORT_SELECT_PLACEHOLDER.getItem(), world.getName(), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),

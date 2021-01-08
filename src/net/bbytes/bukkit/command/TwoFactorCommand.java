@@ -26,7 +26,7 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 		if(args.length == 0) {
 			sender.sendMessage("§b§lTwo-Factor Authentication");
 			sender.sendMessage(" §7- §b/2fa new §7- Generate a new 2FA code");
-			if(sender.hasPermission("honeyfrost.admin")) {
+			if(sender.hasPermission("bbytes.admin")) {
 				sender.sendMessage(" ");
 				sender.sendMessage("§c§lAdmin Commands:");
 				sender.sendMessage(" §7- §c/2fa new <player> §7- Generate a new 2FA code for a player");
@@ -35,7 +35,7 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 			}
 		}else if(args[0].equalsIgnoreCase("new")) {
 			
-			if(args.length > 2 && sender.hasPermission("honeyfrost.admin")) {
+			if(args.length > 2 && sender.hasPermission("bbytes.admin")) {
 				if(getOfflinePlayer(args[1]) == null) {
 					sender.sendMessage("§7Could not find player '§c" + args[0] + "§7'");
 					return true;
@@ -45,7 +45,7 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 				String secret = Main.getInstance().getTfau().generateBase32Secret();
 				
 				if(Main.getInstance().getServer().getVersion().contains("1.12.2")) {
-					Main.getInstance().getWrapper().sendChatComponent((Player) sender,  "{\"text\":\"Click for QR Code\",\"color\":\"yellow\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + Main.getInstance().getTfau().qrImageUrl("Honeyfrost", secret) +"\"}}");
+					Main.getInstance().getWrapper().sendChatComponent((Player) sender,  "{\"text\":\"Click for QR Code\",\"color\":\"yellow\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + Main.getInstance().getTfau().qrImageUrl("Blockbytes", secret) +"\"}}");
 
 			        
 			        Main.getInstance().getTwoFactorUtils().setNewSecret(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), secret);
@@ -57,12 +57,12 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 				
 				String secret = Main.getInstance().getTfau().generateBase32Secret();
 
-				Main.getInstance().getWrapper().sendChatComponent((Player) sender,  "{\"text\":\"Click for QR Code\",\"color\":\"yellow\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + Main.getInstance().getTfau().qrImageUrl("Honeyfrost", secret) +"\"}}");
+				Main.getInstance().getWrapper().sendChatComponent((Player) sender,  "{\"text\":\"Click for QR Code\",\"color\":\"yellow\",\"underlined\":\"true\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + Main.getInstance().getTfau().qrImageUrl("Blockbytes", secret) +"\"}}");
 		        
 		        Main.getInstance().getTwoFactorUtils().setNewSecret(((Player) sender).getUniqueId(), secret);
 	        
 			}
-		}else if(args[0].equalsIgnoreCase("remove") && sender.hasPermission("honeyfrost.admin")) {
+		}else if(args[0].equalsIgnoreCase("remove") && sender.hasPermission("bbytes.admin")) {
 			UUID user;
 			String player;
 			
@@ -91,7 +91,7 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 			
 			
 			
-		}else if(args[0].equalsIgnoreCase("check") && sender.hasPermission("honeyfrost.admin")) {
+		}else if(args[0].equalsIgnoreCase("check") && sender.hasPermission("bbytes.admin")) {
 			
 			UUID user;
 			
@@ -139,11 +139,11 @@ public class TwoFactorCommand implements CommandExecutor, TabCompleter{
 		List<String> list = new ArrayList<String>();
 		if(args.length == 1) {
 			list.add("new");
-			if(sender.hasPermission("honeyfrost.admin")) {
+			if(sender.hasPermission("bbytes.admin")) {
 				list.add("remove");
 				list.add("check");
 			}
-		}else if(args.length == 2 && sender.hasPermission("honeyfrost.admin")) {
+		}else if(args.length == 2 && sender.hasPermission("bbytes.admin")) {
 			for(Player all : Bukkit.getOnlinePlayers())
 				list.add(all.getName());
 		}

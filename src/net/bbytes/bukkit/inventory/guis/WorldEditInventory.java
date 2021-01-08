@@ -4,7 +4,7 @@ import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@ public class WorldEditInventory extends BaseInventory {
         boolean confirm = false;
         if(options.length > 1) confirm = true;
 
-        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
         if(world == null) return null;
 
         if(world.getProject() != null) if(!world.getProject().canAccess(player.getUniqueId())){
@@ -74,7 +74,7 @@ public class WorldEditInventory extends BaseInventory {
                 "§2§l» §a" + getMessage(Message.WORLD_EDIT_CLONE)
         }), 1, 9);
 
-        if(player.hasPermission("honeyfrost.projects.move"))
+        if(player.hasPermission("bbytes.admin"))
             setItem(inv, itemStackUtils.getItemStack(GUIItem.WORLD_MOVE_PROJECT, getMessage(Message.CHANGE_PROJECT), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
                     "§8[§c" + getMessage(Message.INFO_ADMIN_ONLY) + "§8]",

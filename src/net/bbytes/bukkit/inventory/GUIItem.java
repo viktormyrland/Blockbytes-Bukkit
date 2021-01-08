@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public enum GUIItem {
 
-	PLUGIN_INFO("Honeyfrost Worlds", Material.ANVIL),
+	PLUGIN_INFO("Blockbytes Worlds", Material.ANVIL),
 
 	PROJECTS_PLOT_WORLD("Plot World", Material.GRASS),
 	PROJECTS_SPAWN("Spawn", Material.ENDER_PEARL),

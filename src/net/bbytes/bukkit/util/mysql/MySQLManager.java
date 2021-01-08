@@ -170,6 +170,9 @@ public class MySQLManager {
 				"DisplayItem VARCHAR(64) NOT NULL, TimeCreated BIGINT, UNIQUE (UUID));");
 
 		mysql.update("CREATE TABLE IF NOT EXISTS AccessList(UUID VARCHAR(36) NOT NULL, Project VARCHAR(36) NOT NULL, UNIQUE (UUID, Project));");
+
+		mysql.update("CREATE TABLE IF NOT EXISTS Prefixes(ID VARCHAR(36) NOT NULL, Prefix VARCHAR(64) NOT NULL);");
+
 	}
 
 	public void keepAlive() {

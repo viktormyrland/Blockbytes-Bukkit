@@ -22,10 +22,10 @@ public class WarpCommand implements CommandExecutor,TabCompleter, Listener {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 
-		if(!sender.hasPermission("honeyfrost.user")){
-			sender.sendMessage(Message.NO_PERMISSION.get(sender));
-			return true;
-		}
+//		if(!sender.hasPermission("honeyfrost.user")){
+//			sender.sendMessage(Message.NO_PERMISSION.get(sender));
+//			return true;
+//		}
 
 		if(!(sender instanceof Player)){
 			sender.sendMessage("§cOnly executable by player");

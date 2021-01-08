@@ -2,7 +2,7 @@ package net.bbytes.bukkit.inventory;
 
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.project.Project;
-import net.bbytes.bukkit.world.HoneyfrostWorldType;
+import net.bbytes.bukkit.world.ConfigurableWorldType;
 import net.bbytes.bukkit.world.ImportWorldInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -96,7 +96,7 @@ public class InventoryChangedRunnable implements Runnable {
         importWorldInfo.setDisplayname((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.displayName"));
         importWorldInfo.setWorldID((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.worldID"));
         importWorldInfo.setProject(Project.getProject((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.projectID")));
-        importWorldInfo.setHoneyfrostWorldType(HoneyfrostWorldType.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.honeyfrostWorldType")));
+        importWorldInfo.setConfigurableWorldType(ConfigurableWorldType.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.configurableWorldType")));
         importWorldInfo.setEnvironment(World.Environment.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.environment")));
 
         return importWorldInfo;

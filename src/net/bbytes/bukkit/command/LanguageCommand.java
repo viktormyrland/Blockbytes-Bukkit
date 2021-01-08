@@ -21,10 +21,10 @@ public class LanguageCommand implements CommandExecutor, TabCompleter{
 			sender.sendMessage("§cOnly executable as player");
 			return true;
 		}
-		if(!sender.hasPermission("honeyfrost.user")) {
-			sender.sendMessage(Message.NO_PERMISSION.get(sender));
-			return true;
-		}
+//		if(!sender.hasPermission("honeyfrost.user")) {
+//			sender.sendMessage(Message.NO_PERMISSION.get(sender));
+//			return true;
+//		}
 
 
 		//prefix <user> <prefix>
@@ -59,12 +59,9 @@ public class LanguageCommand implements CommandExecutor, TabCompleter{
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		List<String> list = new ArrayList<String>();
-		if(sender.hasPermission("honeyfrost.user")) {
-			if(args.length == 1)
-				for(Language lang : Language.values())
-					list.add(lang.getID());
-
-		}
+		if(args.length == 1)
+			for(Language lang : Language.values())
+				list.add(lang.getID());
 
 		List<String> returnList = new ArrayList<String>();
 		for(String str : list) {

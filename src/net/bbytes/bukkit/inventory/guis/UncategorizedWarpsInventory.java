@@ -42,7 +42,7 @@ public class UncategorizedWarpsInventory extends BaseInventory {
             Warp warp = uncategorizedWarps.get(i);
             ItemStack item = itemStackUtils.getItemStack(warp.getDisplayItem(), "§6" + warp.getName(), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
-                    "§8» §7" + getMessage(Message.WORD_WORLD) + ": §b" + (warp.getHoneyfrostWorld() != null ? warp.getHoneyfrostWorld().getDisplayname() : warp.getWorld()),
+                    "§8» §7" + getMessage(Message.WORD_WORLD) + ": §b" + (warp.getConfigurableWorld() != null ? warp.getConfigurableWorld().getDisplayname() : warp.getWorld()),
                     "§8» §7" + getMessage(Message.WORD_LOCATION) + ": §b("
                             + decimalFormat.format(warp.getLocation().getX()) + " "
                             + decimalFormat.format(warp.getLocation().getY()) + " "

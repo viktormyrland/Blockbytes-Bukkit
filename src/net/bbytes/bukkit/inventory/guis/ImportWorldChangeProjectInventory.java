@@ -34,7 +34,7 @@ public class ImportWorldChangeProjectInventory extends BaseInventory {
         });
         item = setNBT(item, "info.displayName", info.getDisplayname());
         item = setNBT(item, "info.worldID", info.getWorldID());
-        item = setNBT(item, "info.honeyfrostWorldType", info.getHoneyfrostWorldType().name());
+        item = setNBT(item, "info.configurableWorldType", info.getConfigurableWorldType().name());
         item = setNBT(item, "info.environment", info.getEnvironment().name());
         item = setNBT(item, "info.projectID", (info.getProject() != null ? info.getProject().getUUID().toString() : "none"));
         item = setNBT(item, "info.upload", info.isUpload());

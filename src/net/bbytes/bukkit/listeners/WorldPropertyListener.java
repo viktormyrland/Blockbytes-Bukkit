@@ -1,7 +1,7 @@
 package net.bbytes.bukkit.listeners;
 
 import net.bbytes.bukkit.Main;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -16,15 +16,15 @@ public class WorldPropertyListener implements Listener {
 
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent e){
-         HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getWorld());
-         if(honeyfrostWorld != null) if(honeyfrostWorld.getWorldProperties().isWeatherLock())
+         ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getWorld());
+         if(configurableWorld != null) if(configurableWorld.getWorldProperties().isWeatherLock())
              e.setCancelled(true);
     }
 
     @EventHandler
     public void onBlockGravity(BlockPhysicsEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isBlockGravity()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isBlockGravity()){
                 if(e.getBlock().getType() == Material.GRAVEL || e.getBlock().getType() == Material.SAND)
                     e.setCancelled(true);
             }
@@ -33,8 +33,8 @@ public class WorldPropertyListener implements Listener {
 
     @EventHandler
     public void onBlockFromTo(BlockFromToEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isLiquidFlow()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isLiquidFlow()){
             if(e.getBlock().isLiquid()) e.setCancelled(true);
         }
     }
@@ -42,8 +42,8 @@ public class WorldPropertyListener implements Listener {
     @EventHandler
     public void onTNTExplode(EntityExplodeEvent e){
         if(e.getEntityType().equals(EntityType.PRIMED_TNT)){
-            HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getLocation().getWorld());
-            if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isTntExplode()){
+            ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getLocation().getWorld());
+            if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isTntExplode()){
                 e.setCancelled(true);
             }
         }
@@ -52,8 +52,8 @@ public class WorldPropertyListener implements Listener {
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getLocation().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isMobSpawn()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getLocation().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isMobSpawn()){
             if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)
                 e.setCancelled(true);
         }
@@ -61,8 +61,8 @@ public class WorldPropertyListener implements Listener {
 
     @EventHandler
     public void onGrassSpread(BlockSpreadEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isGrowth()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isGrowth()){
             if(e.getSource().getType() == Material.GRASS || e.getSource().getType() == Material.MYCEL)
                 e.setCancelled(true);
         }
@@ -71,14 +71,14 @@ public class WorldPropertyListener implements Listener {
     @EventHandler
     public void onGrassSpread(BlockFormEvent e) {
 
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if (honeyfrostWorld != null) {
-            if (!honeyfrostWorld.getWorldProperties().isSnowFall()) {
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if (configurableWorld != null) {
+            if (!configurableWorld.getWorldProperties().isSnowFall()) {
                 if(e.getNewState().getType() == Material.SNOW
                 || e.getNewState().getType() == Material.ICE)
                     e.setCancelled(true);
             }
-            if (!honeyfrostWorld.getWorldProperties().isLiquidFlow()) {
+            if (!configurableWorld.getWorldProperties().isLiquidFlow()) {
                 if(e.getNewState().getType() == Material.OBSIDIAN
                         || e.getNewState().getType() == Material.COBBLESTONE
                         || e.getNewState().getType() == Material.STONE)
@@ -90,24 +90,24 @@ public class WorldPropertyListener implements Listener {
 
     @EventHandler
     public void onTreeGrow(StructureGrowEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isGrowth()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isGrowth()){
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onPlantGrow(BlockGrowEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isGrowth()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isGrowth()){
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onLeavesDecay(LeavesDecayEvent e){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-        if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isLeafDecay()){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+        if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isLeafDecay()){
             e.setCancelled(true);
         }
     }
@@ -119,8 +119,8 @@ public class WorldPropertyListener implements Listener {
         || e.getBlock().getType().equals(Material.FROSTED_ICE)
         || e.getBlock().getType().equals(Material.SNOW)
         || e.getBlock().getType().equals(Material.SNOW_BLOCK)){
-            HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
-            if(honeyfrostWorld != null) if(!honeyfrostWorld.getWorldProperties().isIceSnowMelting()){
+            ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(e.getBlock().getWorld());
+            if(configurableWorld != null) if(!configurableWorld.getWorldProperties().isIceSnowMelting()){
                 e.setCancelled(true);
             }
         }

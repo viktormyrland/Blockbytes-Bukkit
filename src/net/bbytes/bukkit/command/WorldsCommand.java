@@ -2,10 +2,9 @@ package net.bbytes.bukkit.command;
 
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIInventory;
-import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
-import net.bbytes.bukkit.world.HoneyfrostWorldType;
+import net.bbytes.bukkit.world.ConfigurableWorld;
+import net.bbytes.bukkit.world.ConfigurableWorldType;
 import net.bbytes.bukkit.world.ImportWorldInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -27,10 +26,10 @@ public class WorldsCommand implements CommandExecutor, TabCompleter{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(!sender.hasPermission("honeyfrost.user")){
-            sender.sendMessage(Message.NO_PERMISSION.get(sender));
-            return true;
-        }
+//        if(!sender.hasPermission("honeyfrost.user")){
+//            sender.sendMessage(Message.NO_PERMISSION.get(sender));
+//            return true;
+//        }
 
         if(!(sender instanceof Player)){
             return true;
@@ -47,12 +46,12 @@ public class WorldsCommand implements CommandExecutor, TabCompleter{
             }
             
             
-            HoneyfrostWorld world = null;
+            ConfigurableWorld world = null;
 
             /*
                 Check if query matches file name or displayname exactly
              */
-            for(HoneyfrostWorld w : Main.getInstance().getWorldManager().getWorldList()){
+            for(ConfigurableWorld w : Main.getInstance().getWorldManager().getWorldList()){
                 if(w.getFileWorldName().equalsIgnoreCase(query.toString()) || w.getDisplayname().equalsIgnoreCase(query.toString())){
                     if(w.getProject() == null || w.getProject().canAccess(((Player) sender).getUniqueId())){
                         world = w;
@@ -66,7 +65,7 @@ public class WorldsCommand implements CommandExecutor, TabCompleter{
              */
 
             if(world == null)
-                for(HoneyfrostWorld w : Main.getInstance().getWorldManager().getWorldList()){
+                for(ConfigurableWorld w : Main.getInstance().getWorldManager().getWorldList()){
                     if(w.getFileWorldName().toLowerCase().startsWith(query.toString().toLowerCase()) || w.getDisplayname().toLowerCase().startsWith(query.toString().toLowerCase())){
                         if(w.getProject() == null || w.getProject().canAccess(((Player) sender).getUniqueId())){
                             world = w;
@@ -85,13 +84,13 @@ public class WorldsCommand implements CommandExecutor, TabCompleter{
                 for(File worldFile : Objects.requireNonNull(Bukkit.getWorldContainer().listFiles())){
                     if(worldFile.getName().equalsIgnoreCase(query.toString())){
                         Project p = null;
-                        HoneyfrostWorld try_world = HoneyfrostWorld.getWorld(((Player) sender).getWorld().getName());
+                        ConfigurableWorld try_world = ConfigurableWorld.getWorld(((Player) sender).getWorld().getName());
                         if(try_world != null) p = try_world.getProject();
 
                         sender.sendMessage(Main.getInstance().PREFIX + "Importing world §b" + worldFile.getName() + " §6into §b" + (p != null ? p.getName() : "Uncategorized Worlds"));
                         ImportWorldInfo importWorldInfo = new ImportWorldInfo();
                         importWorldInfo.setProject(p);
-                        importWorldInfo.setHoneyfrostWorldType(HoneyfrostWorldType.VOID);
+                        importWorldInfo.setConfigurableWorldType(ConfigurableWorldType.VOID);
                         importWorldInfo.setEnvironment(World.Environment.NORMAL);
                         importWorldInfo.setWorldID(worldFile.getName());
                         importWorldInfo.setDisplayname(worldFile.getName());
@@ -125,7 +124,7 @@ public class WorldsCommand implements CommandExecutor, TabCompleter{
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<String>();
         if(args.length == 1 && Arrays.asList(forceTPAliases).contains(label.toLowerCase()))
-            for(HoneyfrostWorld world : Main.getInstance().getWorldManager().getWorldList())
+            for(ConfigurableWorld world : Main.getInstance().getWorldManager().getWorldList())
                 if(world.getProject() == null || world.getProject().canAccess(((Player) sender).getUniqueId()))
                     list.add(world.getDisplayname());
 

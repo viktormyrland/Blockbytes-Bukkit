@@ -27,6 +27,7 @@ public class ProjectManager {
     }
 
     public void loadProjects_Sync() throws SQLException {
+        projectList.clear();
         ResultSet rs = Main.getInstance().getMySQLManager().mysql.getMySQL().query("SELECT * FROM Projects ORDER BY TimeCreated ASC;");
 
         while(rs.next()){
@@ -44,9 +45,7 @@ public class ProjectManager {
 
     public void saveProjects(){
         ExecutorService ex = Executors.newSingleThreadExecutor();
-        ex.execute(() -> {
-            saveProjects_Sync();
-        });
+        ex.execute(this::saveProjects_Sync);
         ex.shutdown();
     }
 
@@ -84,7 +83,7 @@ public class ProjectManager {
         Project project = new Project(uuid);
         projectList.add(project);
 
-
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
 
         return project;
     }
@@ -92,6 +91,7 @@ public class ProjectManager {
     public void deleteProject(Project project) {
         Main.getInstance().getMySQLManager().mysql.update("DELETE FROM Projects WHERE UUID='" + project.getUUID() +"';");
         projectList.remove(project);
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
 

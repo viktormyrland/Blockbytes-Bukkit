@@ -5,7 +5,7 @@ import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
-import net.bbytes.bukkit.world.RecycledHoneyfrostWorld;
+import net.bbytes.bukkit.world.RecycledConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -37,12 +37,12 @@ public class RecycleBinInventory extends BaseInventory {
                 "§2§l» §a" + Message.CLICK_TO_OPEN.get(p)
         }), 1, 5);
 
-        List<RecycledHoneyfrostWorld> worldList = Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList();
+        List<RecycledConfigurableWorld> worldList = Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList();
 
         List<ItemStack> itemStackList = new ArrayList<>();
 
         for(int i = (page-1)*28; i < worldList.size(); i++){
-            RecycledHoneyfrostWorld world = worldList.get(i);
+            RecycledConfigurableWorld world = worldList.get(i);
             if(world == null) break;
 
             String project = "none";
@@ -64,7 +64,7 @@ public class RecycleBinInventory extends BaseInventory {
                     "§2§l» §a" + getMessage(Message.CLICK_RESTORE),
             });
 
-            if(p.hasPermission("honeyfrost.manager")){
+            if(p.hasPermission("bbytes.admin")){
                 item = itemStackUtils.getItemStack(world.getDisplayItem(), "§6" + world.getDisplayname(), new String[]{
                         "§8" + world.getFileWorldName(),
                         "§8» §7" +getMessage(Message.DELETED) + ": §b" + simpleDateFormat.format(new Date(world.getRecycled())),

@@ -24,13 +24,13 @@ public class WorldProperties {
 
     private World.Environment environment = World.Environment.NORMAL;
     private long seed = 0;
-    private HoneyfrostWorldType honeyfrostWorldType = HoneyfrostWorldType.VOID;
-    private HoneyfrostWorld parentWorld;
+    private ConfigurableWorldType configurableWorldType = ConfigurableWorldType.VOID;
+    private ConfigurableWorld parentWorld;
 
-    public WorldProperties(HoneyfrostWorld parentWorld) {
+    public WorldProperties(ConfigurableWorld parentWorld) {
         this.parentWorld = parentWorld;
     }
-    public WorldProperties(Map<String, Object> map, HoneyfrostWorld parentWorld){
+    public WorldProperties(Map<String, Object> map, ConfigurableWorld parentWorld){
         this.parentWorld = parentWorld;
         if(map.containsKey("iceSnowMelting")) this.iceSnowMelting = (boolean) map.get("iceSnowMelting");
         if(map.containsKey("leafDecay")) this.leafDecay = (boolean) map.get("leafDecay");
@@ -46,7 +46,7 @@ public class WorldProperties {
         if(map.containsKey("timeLock")) this.timeLock = (boolean) map.get("timeLock");
 
         if(map.containsKey("environment")) this.environment = World.Environment.getEnvironment((int) map.get("environment"));
-        if(map.containsKey("honeyfrostWorldType")) this.honeyfrostWorldType = HoneyfrostWorldType.valueOf((String) map.get("honeyfrostWorldType"));
+        if(map.containsKey("configurableWorldType")) this.configurableWorldType = ConfigurableWorldType.valueOf((String) map.get("configurableWorldType"));
         if(map.containsKey("seed")) this.seed = Long.parseLong((String) map.get("seed"));
     }
     
@@ -69,7 +69,7 @@ public class WorldProperties {
         if(this.timeLock != wo.timeLock) map.put("timeLock", this.timeLock);
 
         if(this.environment != wo.environment) map.put("environment", this.environment.getId());
-        if(!this.honeyfrostWorldType.equals(wo.honeyfrostWorldType)) map.put("honeyfrostWorldType", this.honeyfrostWorldType.name());
+        if(!this.configurableWorldType.equals(wo.configurableWorldType)) map.put("configurableWorldType", this.configurableWorldType.name());
         if(this.seed != wo.seed) map.put("seed", this.seed + "");
         
         
@@ -191,19 +191,19 @@ public class WorldProperties {
         this.seed = seed;
     }
 
-    public HoneyfrostWorldType getHoneyfrostWorldType() {
-        return honeyfrostWorldType;
+    public ConfigurableWorldType getConfigurableWorldType() {
+        return configurableWorldType;
     }
 
-    public void setHoneyfrostWorldType(HoneyfrostWorldType honeyfrostWorldType) {
-        this.honeyfrostWorldType = honeyfrostWorldType;
+    public void setConfigurableWorldType(ConfigurableWorldType configurableWorldType) {
+        this.configurableWorldType = configurableWorldType;
     }
 
-    public HoneyfrostWorld getParentWorld() {
+    public ConfigurableWorld getParentWorld() {
         return parentWorld;
     }
 
-    public void setParentWorld(HoneyfrostWorld parentWorld) {
+    public void setParentWorld(ConfigurableWorld parentWorld) {
         this.parentWorld = parentWorld;
     }
 }

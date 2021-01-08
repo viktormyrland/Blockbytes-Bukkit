@@ -169,7 +169,6 @@ public class BungeeMessager implements PluginMessageListener {
 				
 				 if(playerReceived.equalsIgnoreCase("OTHERS")) {
 					 for(Player all : Bukkit.getOnlinePlayers())
-						 if(all.hasPermission("honeyfrost.allowchat"))
 						 all.sendMessage(messageIn.replaceAll("&", "§"));
 				 }
 			 }else if(subchannel.equals("UpdateWhitelist")) {

@@ -102,7 +102,7 @@ public class BookUtil {
         BookMeta bookMeta = (BookMeta) book.getItemMeta();
 
         BaseComponent[] page =
-                new ComponentBuilder("    Honeyfrost\n\n")
+                new ComponentBuilder("    Blockbytes\n\n")
                         .color(ChatColor.GOLD)
                         .bold(true)
                         .append(
@@ -114,7 +114,7 @@ public class BookUtil {
                                 new ComponentBuilder("Upload World")
                                         .color(ChatColor.DARK_AQUA)
                                         .bold(true)
-                                        .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://upload.honeyfrost.net"))
+                                        .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://upload.bbytes.net"))
                                         .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Upload your world").create()))
                                         .create()).create();
 

@@ -15,7 +15,7 @@ public class ForceSaveCommand implements CommandExecutor, TabCompleter{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(!sender.hasPermission("honeyfrost.admin")){
+        if(!sender.hasPermission("bbytes.admin")){
             sender.sendMessage(Message.NO_PERMISSION.get(sender));
             return true;
         }

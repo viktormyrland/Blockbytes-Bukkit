@@ -111,17 +111,17 @@ public class WarpMenuProjectsInventory extends BaseInventory {
         itemStackList = new ArrayList<>();
 
         for(Warp warp : user.getRecentWarps()){
-            if(warp.getHoneyfrostWorld() != null) if(warp.getHoneyfrostWorld().getProject() != null) if(!warp.getHoneyfrostWorld().getProject().canAccess(p.getUniqueId()))continue;
+            if(warp.getConfigurableWorld() != null) if(warp.getConfigurableWorld().getProject() != null) if(!warp.getConfigurableWorld().getProject().canAccess(p.getUniqueId()))continue;
 
             String project = null;
-            if(warp.getHoneyfrostWorld() != null) if(warp.getHoneyfrostWorld().getProject() != null){
-                project = warp.getHoneyfrostWorld().getProject().getName();
+            if(warp.getConfigurableWorld() != null) if(warp.getConfigurableWorld().getProject() != null){
+                project = warp.getConfigurableWorld().getProject().getName();
             }
 
             item = itemStackUtils.getItemStack(warp.getDisplayItem(), "§6" + warp.getName(), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
                     "§8» §7" + getMessage(Message.WORD_PROJECT) + ": §b" + (project != null ? project : "none"),
-                    "§8» §7" + getMessage(Message.WORD_WORLD) +": §b" + (warp.getHoneyfrostWorld() != null ? warp.getHoneyfrostWorld().getDisplayname() : warp.getWorld()),
+                    "§8» §7" + getMessage(Message.WORD_WORLD) +": §b" + (warp.getConfigurableWorld() != null ? warp.getConfigurableWorld().getDisplayname() : warp.getWorld()),
                     "§8» §7" + getMessage(Message.WORD_LOCATION) +": §b" +
                             decimalFormat.format(warp.getLocation().getX()) + " " +
                             decimalFormat.format(warp.getLocation().getY()) + " " +

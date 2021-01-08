@@ -8,10 +8,10 @@ import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
 import net.bbytes.bukkit.util.BookUtil;
 import net.bbytes.bukkit.warp.Warp;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
-import net.bbytes.bukkit.world.HoneyfrostWorldType;
+import net.bbytes.bukkit.world.ConfigurableWorld;
+import net.bbytes.bukkit.world.ConfigurableWorldType;
 import net.bbytes.bukkit.world.ImportWorldInfo;
-import net.bbytes.bukkit.world.RecycledHoneyfrostWorld;
+import net.bbytes.bukkit.world.RecycledConfigurableWorld;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -150,7 +150,7 @@ public class InventoryListener implements Listener {
                                 String projectID = (String) Main.getInstance().getInventoryManager().getNBT(e.getCurrentItem(), "projectID");
                                 String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
 
-                                HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                                ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                                 Project project = Project.getProject(projectID);
 
                                 world.changeProject(project);
@@ -276,10 +276,10 @@ public class InventoryListener implements Listener {
                         String projectID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "projectID");
                         Project project = Main.getInstance().getProjectManager().getProject(projectID);
                         if(project != null){
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.VOID, project);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.VOID, project);
                             GUIInventory.PROJECT_OVERVIEW.display(player, projectID, 1);
                         }else{
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.VOID);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.VOID);
                             GUIInventory.WORLDS_UNCATEGORIZED.display(player, 1);
                         }
 
@@ -290,10 +290,10 @@ public class InventoryListener implements Listener {
                         Project project = Main.getInstance().getProjectManager().getProject(projectID);
 
                         if(project != null){
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.FLAT, project);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.FLAT, project);
                             GUIInventory.PROJECT_OVERVIEW.display(player, projectID, 1);
                         }else{
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.FLAT);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.FLAT);
                             GUIInventory.WORLDS_UNCATEGORIZED.display(player, 1);
                         }
 
@@ -304,10 +304,10 @@ public class InventoryListener implements Listener {
                         String projectID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "projectID");
                         Project project = Main.getInstance().getProjectManager().getProject(projectID);
                         if(project != null){
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.NORMAL, project);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.NORMAL, project);
                             GUIInventory.PROJECT_OVERVIEW.display(player, projectID, 1);
                         }else{
-                            Main.getInstance().getWorldManager().createNewWorld(player, HoneyfrostWorldType.NORMAL);
+                            Main.getInstance().getWorldManager().createNewWorld(player, ConfigurableWorldType.NORMAL);
                             GUIInventory.WORLDS_UNCATEGORIZED.display(player, 1);
                         }
 
@@ -343,7 +343,7 @@ public class InventoryListener implements Listener {
                         switch(inv){
                             case WORLD_EDIT:{
                                 String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                                HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                                ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                                 new AnvilGUI.Builder()
                                         .onClose(
                                                 player1 -> GUIInventory.WORLD_EDIT.display(player, worldID)
@@ -380,7 +380,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_DOWNLOAD:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
 
                         world.downloadWorld(player);
                         player.closeInventory();
@@ -395,7 +395,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_CONFIRM_DELETE:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                        ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                         Project project = world.getProject();
                         world.recycleWorld(player);
 
@@ -406,7 +406,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_CLONE:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                        ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                         world.cloneWorld();
 
                         if(world.getProject() != null)
@@ -429,13 +429,13 @@ public class InventoryListener implements Listener {
 
                     case WORLD_TRANSFER_BUILD15:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                        ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                         world.transferWorld(player, "BUILD15");
                         break;
                     }
                     case WORLD_TRANSFER_BUILD16:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                        ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                         world.transferWorld(player, "BUILD16");
                         break;
                     }
@@ -447,7 +447,7 @@ public class InventoryListener implements Listener {
                         switch(inv){
                             case CHANGE_PROJECT:{
                                 String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                                HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+                                ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
                                 world.unassignFromProject();
                                 GUIInventory.WORLDS_UNCATEGORIZED.display(player, 1);
                                 break;
@@ -471,7 +471,7 @@ public class InventoryListener implements Listener {
 
                     case WORLD_PROPERTY_TIMELOCK:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setTimeLock(!world.getWorldProperties().isTimeLock());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -479,7 +479,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_WEATHERLOCK:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setWeatherLock(!world.getWorldProperties().isWeatherLock());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -487,7 +487,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_MOB_SPAWN:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setMobSpawn(!world.getWorldProperties().isMobSpawn());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -495,7 +495,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_MOB_GRIEFING:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setMobGriefing(!world.getWorldProperties().isMobGriefing());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -503,7 +503,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_TNT_EXPLODE:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setTntExplode(!world.getWorldProperties().isTntExplode());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -511,7 +511,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_FIRE_SPREAD:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setFireSpread(!world.getWorldProperties().isFireSpread());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -519,7 +519,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_PLANT_GROWTH:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setGrowth(!world.getWorldProperties().isGrowth());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -527,7 +527,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_ICE_SNOW_MELT:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setIceSnowMelting(!world.getWorldProperties().isIceSnowMelting());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -535,7 +535,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_LIQUID_FLOW:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setLiquidFlow(!world.getWorldProperties().isLiquidFlow());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -543,7 +543,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_LEAF_DECAY:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setLeafDecay(!world.getWorldProperties().isLeafDecay());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -551,7 +551,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_SNOW_FORMING:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setSnowFall(!world.getWorldProperties().isSnowFall());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -559,7 +559,7 @@ public class InventoryListener implements Listener {
                     }
                     case WORLD_PROPERTY_BLOCK_GRAVITY:{
                         String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                        HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                        ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
                         world.getWorldProperties().setBlockGravity(!world.getWorldProperties().isBlockGravity());
 
                         GUIInventory.WORLD_EDIT.display(player, worldID);
@@ -581,7 +581,7 @@ public class InventoryListener implements Listener {
                             }
                             case WORLD_EDIT:{
                                 String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getCurrentItem(), "worldID");
-                                HoneyfrostWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
+                                ConfigurableWorld world = Main.getInstance().getWorldManager().getWorld(worldID);
 
                                 if(e.getCursor() != null) if(e.getCursor().getType() != Material.AIR){
                                     world.setDisplayItem(new ItemStack(e.getCursor().getType(), e.getCursor().getAmount(), e.getCursor().getDurability()));
@@ -591,9 +591,9 @@ public class InventoryListener implements Listener {
                                 break;
                             }
                             case RECYCLE_BIN:{
-                                if(player.hasPermission("honeyfrost.manager") && e.getClick().isShiftClick()){
+                                if(player.hasPermission("bbytes.admin") && e.getClick().isShiftClick()){
                                     String recycledWorldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getCurrentItem(), "recycledWorldID");
-                                    RecycledHoneyfrostWorld world = Main.getInstance().getWorldManager().getRecycleBin().getWorld(recycledWorldID);
+                                    RecycledConfigurableWorld world = Main.getInstance().getWorldManager().getRecycleBin().getWorld(recycledWorldID);
                                     Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList().remove(world);
                                     File file = new File(Bukkit.getWorldContainer(), world.getFileWorldName());;
                                     if(file.isDirectory()) {
@@ -608,7 +608,7 @@ public class InventoryListener implements Listener {
                                     break;
                                 }
                                 String recycledWorldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getCurrentItem(), "recycledWorldID");
-                                RecycledHoneyfrostWorld world = Main.getInstance().getWorldManager().getRecycleBin().getWorld(recycledWorldID);
+                                RecycledConfigurableWorld world = Main.getInstance().getWorldManager().getRecycleBin().getWorld(recycledWorldID);
                                 world.restore();
                                 if(world.getProjectID() != null) if(Project.getProject(world.getProjectID().toString()) != null){
                                     GUIInventory.PROJECT_OVERVIEW.display(player, world.getProjectID().toString(), 1);
@@ -755,25 +755,25 @@ public class InventoryListener implements Listener {
 
                     case IMPORT_TYPE_NORMAL:{
                         ImportWorldInfo info = getImportWorldInfo(e.getClickedInventory());
-                        info.setHoneyfrostWorldType(HoneyfrostWorldType.NORMAL);
+                        info.setConfigurableWorldType(ConfigurableWorldType.NORMAL);
                         inv.display(player, info);
                         break;
                     }
                     case IMPORT_TYPE_FLAT:{
                         ImportWorldInfo info = getImportWorldInfo(e.getClickedInventory());
-                        info.setHoneyfrostWorldType(HoneyfrostWorldType.FLAT);
+                        info.setConfigurableWorldType(ConfigurableWorldType.FLAT);
                         inv.display(player, info);
                         break;
                     }
                     case IMPORT_TYPE_VOID:{
                         ImportWorldInfo info = getImportWorldInfo(e.getClickedInventory());
-                        info.setHoneyfrostWorldType(HoneyfrostWorldType.VOID);
+                        info.setConfigurableWorldType(ConfigurableWorldType.VOID);
                         inv.display(player, info);
                         break;
                     }
                     case IMPORT_CREATE:{
                         ImportWorldInfo info = getImportWorldInfo(e.getClickedInventory());
-                        if(HoneyfrostWorld.getWorld(info.getWorldID()) != null){
+                        if(ConfigurableWorld.getWorld(info.getWorldID()) != null){
                             player.sendMessage("§cError: §4World already imported.");
                             player.closeInventory();
                             break;
@@ -956,7 +956,7 @@ public class InventoryListener implements Listener {
                             }
                             case WARPS_IN_WORLD:{
                                 String worldID = (String) Main.getInstance().getInventoryManager().getNBT(e.getClickedInventory().getItem(4), "worldID");
-                                Project project = HoneyfrostWorld.getWorld(worldID).getProject();
+                                Project project = ConfigurableWorld.getWorld(worldID).getProject();
                                 if(project != null) GUIInventory.WARP_WORLDS_IN_PROJECT.display(player, project.getUUID().toString(), 1);
                                 else GUIInventory.WARPS_UNCATEGORIZED.display(player, 1);
                                 break;
@@ -1047,7 +1047,7 @@ public class InventoryListener implements Listener {
         importWorldInfo.setDisplayname((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.displayName"));
         importWorldInfo.setWorldID((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.worldID"));
         importWorldInfo.setProject(Project.getProject((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.projectID")));
-        importWorldInfo.setHoneyfrostWorldType(HoneyfrostWorldType.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.honeyfrostWorldType")));
+        importWorldInfo.setConfigurableWorldType(ConfigurableWorldType.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.configurableWorldType")));
         importWorldInfo.setEnvironment(World.Environment.valueOf((String) Main.getInstance().getInventoryManager().getNBT(inv.getItem(4), "info.environment")));
 
         return importWorldInfo;

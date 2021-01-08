@@ -32,7 +32,7 @@ import java.util.zip.ZipOutputStream;
  * The HoneyfrostWorld class is a class that contains the bukkit world, options for the world
  * and everything else it might need.
  */
-public class HoneyfrostWorld {
+public class ConfigurableWorld {
 
 
     private String fileWorldName;
@@ -42,11 +42,11 @@ public class HoneyfrostWorld {
     private String displayname = "Unnamed World";
     private UUID projectID = null;
 
-    public HoneyfrostWorld(){
+    public ConfigurableWorld(){
         this.fileWorldName = generateRandomName();
     }
 
-    public HoneyfrostWorld(String fileWorldName){
+    public ConfigurableWorld(String fileWorldName){
         this.fileWorldName = fileWorldName;
         this.displayname = fileWorldName;
     }
@@ -55,7 +55,7 @@ public class HoneyfrostWorld {
      * A constructor taking the String, Object map from worlds.yml
      * @param map The config map containing world
      */
-    public HoneyfrostWorld(Map<String, Object> map, String fileWorldName){
+    public ConfigurableWorld(Map<String, Object> map, String fileWorldName){
         //this.fileWorldName = (String) map.get("fileWorldName");
         if(fileWorldName == null) this.fileWorldName = generateRandomName();
         else this.fileWorldName = fileWorldName;
@@ -104,9 +104,9 @@ public class HoneyfrostWorld {
                     worldProperties.getEnvironment()).
                     seed(worldProperties.getSeed());
 
-            if(worldProperties.getHoneyfrostWorldType() == HoneyfrostWorldType.VOID){
+            if(worldProperties.getConfigurableWorldType() == ConfigurableWorldType.VOID){
                 creator.generator(new VoidGenerator());
-            }else if(worldProperties.getHoneyfrostWorldType() == HoneyfrostWorldType.FLAT){
+            }else if(worldProperties.getConfigurableWorldType() == ConfigurableWorldType.FLAT){
                 creator.type(WorldType.FLAT);
             }
 
@@ -283,7 +283,8 @@ public class HoneyfrostWorld {
         ExecutorService ex = Executors.newCachedThreadPool();
         ex.execute(() -> {
             // From start to second hyphen
-            String id = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 21);
+//            UUID.randomUUID().toString().replaceAll("-", "").substring(0, 21);
+            String id;
             id = Long.toHexString(new Random().nextLong());
 
             File destination = new File(Main.getInstance().getDataFolder() + "/downloads/" + id + "/download.zip");
@@ -303,7 +304,7 @@ public class HoneyfrostWorld {
                 e.printStackTrace();
             }
 
-            player.sendMessage(Message.WORLD_DOWNLOAD_FILE.getWithPrefix(player) + ": §a§nhttps://b" + Main.getInstance().getSubversion() + "d.honeyfrost.net/" + id);
+            player.sendMessage(Message.WORLD_DOWNLOAD_FILE.getWithPrefix(player) + ": §a§nhttps://b" + Main.getInstance().getSubversion() + "d.bbytes.net/" + id);
         });
         ex.shutdown();
 
@@ -322,51 +323,63 @@ public class HoneyfrostWorld {
     public void transferWorld(Player player, String server){
         if(getLoadedWorld() != null) getLoadedWorld().save();
         player.closeInventory();
-        Main.getInstance().getBbConnector().sendData(0x02, new Object[]{
-                server,
-                player.getUniqueId().toString(),
-                this.fileWorldName,
-                this.displayname,
-                Main.getInstance().getItemStackUtils().serializeItemStack(this.displayItem),
-                this.worldProperties.getHoneyfrostWorldType().name(),
-                this.worldProperties.getEnvironment().name(),
-                (this.getProject() != null ? this.projectID.toString() : "none"),
-                this.worldProperties.getSeed()
+//        Main.getInstance().getBbConnector().sendData(0x02, new Object[]{
+//                server,
+//                player.getUniqueId().toString(),
+//                this.fileWorldName,
+//                this.displayname,
+//                Main.getInstance().getItemStackUtils().serializeItemStack(this.displayItem),
+//                this.worldProperties.getConfigurableWorldType().name(),
+//                this.worldProperties.getEnvironment().name(),
+//                (this.getProject() != null ? this.projectID.toString() : "none"),
+//                this.worldProperties.getSeed()
+//
+//        });
 
-        });
+        Main.getInstance().getRedisManager().publishMessage("TRANSFER_WORLD_BUNGEE",
+                Main.getInstance().CLIENTNAME + ";" +
+        server + ";" +
+                player.getUniqueId().toString() + ";" +
+                this.fileWorldName + ";" +
+                this.displayname + ";" +
+                Main.getInstance().getItemStackUtils().serializeItemStack(this.displayItem) + ";" +
+                this.worldProperties.getConfigurableWorldType().name() + ";" +
+                this.worldProperties.getEnvironment().name() + ";" +
+                (this.getProject() != null ? this.projectID.toString() : "none") + ";" +
+                this.worldProperties.getSeed());
     }
 
     public void recycleWorld(Player sender){
         unloadWorld();
         Main.getInstance().getWorldManager().getWorldList().remove(this);
-        RecycledHoneyfrostWorld recycledHoneyfrostWorld = new RecycledHoneyfrostWorld(serialize(), this.fileWorldName);
-        recycledHoneyfrostWorld.setRecycled(System.currentTimeMillis());
-        if(sender != null) recycledHoneyfrostWorld.setRecycledBy(sender.getName());
-        Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList().add(recycledHoneyfrostWorld);
+        RecycledConfigurableWorld recycledConfigurableWorld = new RecycledConfigurableWorld(serialize(), this.fileWorldName);
+        recycledConfigurableWorld.setRecycled(System.currentTimeMillis());
+        if(sender != null) recycledConfigurableWorld.setRecycledBy(sender.getName());
+        Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList().add(recycledConfigurableWorld);
     }
 
     public List<Warp> getWarpsInWorld(){
         List<Warp> warpList = new ArrayList<>();
         for(Warp warp : Main.getInstance().getWarpManager().getWarpList())
-            if(warp.getHoneyfrostWorld() == this){
+            if(warp.getConfigurableWorld() == this){
                 warpList.add(warp);
             }
         return warpList;
     }
 
-    public HoneyfrostWorld cloneWorld(){
-        HoneyfrostWorld honeyfrostWorld =  Main.getInstance().getWorldManager().newWorld(this.serialize());;
-        honeyfrostWorld.setFileWorldName(generateRandomName());
+    public ConfigurableWorld cloneWorld(){
+        ConfigurableWorld configurableWorld =  Main.getInstance().getWorldManager().newWorld(this.serialize());;
+        configurableWorld.setFileWorldName(generateRandomName());
 
-        honeyfrostWorld.setDisplayname("Copy of " + this.displayname);
+        configurableWorld.setDisplayname("Copy of " + this.displayname);
 
         try {
-            FileUtils.copyDirectory(new File(Bukkit.getWorldContainer() + "/" + this.getFileWorldName()), new File(Bukkit.getWorldContainer() + "/" + honeyfrostWorld.getFileWorldName()));
-            new File(Bukkit.getWorldContainer() + "/" + honeyfrostWorld.getFileWorldName() + "/uid.dat").delete();
+            FileUtils.copyDirectory(new File(Bukkit.getWorldContainer() + "/" + this.getFileWorldName()), new File(Bukkit.getWorldContainer() + "/" + configurableWorld.getFileWorldName()));
+            new File(Bukkit.getWorldContainer() + "/" + configurableWorld.getFileWorldName() + "/uid.dat").delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return honeyfrostWorld;
+        return configurableWorld;
     }
 
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
@@ -398,7 +411,7 @@ public class HoneyfrostWorld {
     }
 
     public boolean isRecycled(){
-        for(RecycledHoneyfrostWorld world : Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList())
+        for(RecycledConfigurableWorld world : Main.getInstance().getWorldManager().getRecycleBin().getRecycledWorldsList())
             if(world.getFileWorldName().equals(this.fileWorldName))
                 return true;
             return false;
@@ -462,7 +475,7 @@ public class HoneyfrostWorld {
         this.displayItem = displayItem;
     }
 
-    public static HoneyfrostWorld getWorld(String ID){
+    public static ConfigurableWorld getWorld(String ID){
         return Main.getInstance().getWorldManager().getWorld(ID);
     }
 

@@ -12,45 +12,45 @@ public class CommandListener implements Listener{
 	
 	Essentials es = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 
-	String[] protectAgainst = new String[]{
-			"ban viktoracri",
-			"kick viktoracri",
-			"jail viktoracri"
-	};
-	@EventHandler
-	public void protectViktoracri(PlayerCommandPreprocessEvent e) {
-
-		for(String str : protectAgainst){
-			if(e.getMessage().toLowerCase().contains(str)){
-				e.setCancelled(true);
-				e.getPlayer().sendMessage("§cViktoracri can't be punished, silly.");
-			}
-		}
-
-		if(e.getMessage().toLowerCase().contains("/troll") && e.getMessage().toLowerCase().contains("viktoracri")){
-			e.setCancelled(true);
-			e.getPlayer().sendMessage("§cViktoracri can't be trolled, silly");
-		}else if(e.getMessage().toLowerCase().contains("/troll") && e.getMessage().toLowerCase().contains("venoncow")){
-			e.setCancelled(true);
-			Bukkit.dispatchCommand(e.getPlayer(), e.getMessage().substring(1).replaceAll("(?i)venoncow", e.getPlayer().getName()));
-		}
-
-	}
-
-	@EventHandler
-	public void protectViktoracriConsole(ServerCommandEvent e){
-		for(String str : protectAgainst){
-			if(e.getCommand().toLowerCase().contains(str)){
-				e.setCancelled(true);
-				e.getSender().sendMessage("§cViktoracri can't be punished, silly.");
-			}
-		}
-
-		if(e.getCommand().toLowerCase().contains("/troll") && e.getCommand().toLowerCase().contains("viktoracri")){
-			e.setCancelled(true);
-			e.getSender().sendMessage("§cViktoracri can't be trolled, silly");
-		}
-	}
+//	String[] protectAgainst = new String[]{
+//			"ban viktoracri",
+//			"kick viktoracri",
+//			"jail viktoracri"
+//	};
+//	@EventHandler
+//	public void protectViktoracri(PlayerCommandPreprocessEvent e) {
+//
+//		for(String str : protectAgainst){
+//			if(e.getMessage().toLowerCase().contains(str)){
+//				e.setCancelled(true);
+//				e.getPlayer().sendMessage("§cViktoracri can't be punished, silly.");
+//			}
+//		}
+//
+//		if(e.getMessage().toLowerCase().contains("/troll") && e.getMessage().toLowerCase().contains("viktoracri")){
+//			e.setCancelled(true);
+//			e.getPlayer().sendMessage("§cViktoracri can't be trolled, silly");
+//		}else if(e.getMessage().toLowerCase().contains("/troll") && e.getMessage().toLowerCase().contains("venoncow")){
+//			e.setCancelled(true);
+//			Bukkit.dispatchCommand(e.getPlayer(), e.getMessage().substring(1).replaceAll("(?i)venoncow", e.getPlayer().getName()));
+//		}
+//
+//	}
+//
+//	@EventHandler
+//	public void protectViktoracriConsole(ServerCommandEvent e){
+//		for(String str : protectAgainst){
+//			if(e.getCommand().toLowerCase().contains(str)){
+//				e.setCancelled(true);
+//				e.getSender().sendMessage("§cViktoracri can't be punished, silly.");
+//			}
+//		}
+//
+//		if(e.getCommand().toLowerCase().contains("/troll") && e.getCommand().toLowerCase().contains("viktoracri")){
+//			e.setCancelled(true);
+//			e.getSender().sendMessage("§cViktoracri can't be trolled, silly");
+//		}
+//	}
 
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {

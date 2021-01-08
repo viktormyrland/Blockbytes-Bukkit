@@ -176,7 +176,7 @@ public class UTNUtils {
 	}
 
 	public void cacheList(){
-		Main.getInstance().getMySQLManager().mysql.query("SELECT * FROM Honeyfrost.UUIDToName;", (rs) -> {
+		Main.getInstance().getMySQLManager().mysql.query("SELECT * FROM UUIDToName;", (rs) -> {
 			while(true){
 				try {
 					if (!rs.next()) break;

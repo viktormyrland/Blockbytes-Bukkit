@@ -18,7 +18,7 @@ import java.util.*;
 
 public class WorldManager {
 
-    private List<HoneyfrostWorld> worldList = new ArrayList<>();
+    private List<ConfigurableWorld> worldList = new ArrayList<>();
     private WorldRecycleBin recycleBin = new WorldRecycleBin();
 
     public WorldManager(){
@@ -62,7 +62,7 @@ public class WorldManager {
         if(worldList.size() == 0)return;
 
         Map<String, Object> data = new HashMap<String, Object>();
-        for(HoneyfrostWorld hw : worldList)
+        for(ConfigurableWorld hw : worldList)
             data.put(hw.getFileWorldName(), hw.serialize());
 
         DumperOptions options = new DumperOptions();
@@ -109,38 +109,38 @@ public class WorldManager {
     }
 
 
-    public void createNewWorld(Player sender, HoneyfrostWorldType type){
+    public void createNewWorld(Player sender, ConfigurableWorldType type){
         createNewWorld(sender, type, null);
     }
 
-    public void createNewWorld(Player sender, HoneyfrostWorldType type, Project project){
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().newWorld();
-        honeyfrostWorld.getWorldProperties().setHoneyfrostWorldType(type);
-        honeyfrostWorld.getWorldProperties().setSeed(new Random().nextLong());
-        if(project != null) honeyfrostWorld.setProjectID(project.getUUID());
-        generateName(honeyfrostWorld);
+    public void createNewWorld(Player sender, ConfigurableWorldType type, Project project){
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().newWorld();
+        configurableWorld.getWorldProperties().setConfigurableWorldType(type);
+        configurableWorld.getWorldProperties().setSeed(new Random().nextLong());
+        if(project != null) configurableWorld.setProjectID(project.getUUID());
+        generateName(configurableWorld);
 
-        if(type == HoneyfrostWorldType.VOID)
-            honeyfrostWorld.setDisplayItem(new ItemStack(Material.BARRIER));
-        else if(type == HoneyfrostWorldType.NORMAL)
-            honeyfrostWorld.setDisplayItem(new ItemStack(Material.STONE));
-        if(type == HoneyfrostWorldType.FLAT)
-            honeyfrostWorld.setDisplayItem(new ItemStack(Material.GRASS));
+        if(type == ConfigurableWorldType.VOID)
+            configurableWorld.setDisplayItem(new ItemStack(Material.BARRIER));
+        else if(type == ConfigurableWorldType.NORMAL)
+            configurableWorld.setDisplayItem(new ItemStack(Material.STONE));
+        if(type == ConfigurableWorldType.FLAT)
+            configurableWorld.setDisplayItem(new ItemStack(Material.GRASS));
 
         sender.sendMessage(Message.NEW_WORLD_CREATED.getWithPrefix(sender).replace("{type}", "§b" + type.name() + "§6"));
 
     }
 
-    public void generateName(HoneyfrostWorld honeyfrostWorld){
-        String type = honeyfrostWorld.getWorldProperties().getHoneyfrostWorldType().name();
+    public void generateName(ConfigurableWorld configurableWorld){
+        String type = configurableWorld.getWorldProperties().getConfigurableWorldType().name();
         type = type.substring(0, 1) + type.substring(1).toLowerCase();
 
-        honeyfrostWorld.setDisplayname(generateName(honeyfrostWorld.getProject(), "New " + type + " world"));
+        configurableWorld.setDisplayname(generateName(configurableWorld.getProject(), "New " + type + " world"));
     }
 
     public String generateName(Project project, String expression){
         int i = 1;
-        for(HoneyfrostWorld world : worldList) {
+        for(ConfigurableWorld world : worldList) {
             if ((project != null ? world.getProjectIDStringNotNull().equals(project.getUUID().toString()) : world.getProjectID() == null))
                 if (world.getDisplayname().startsWith(expression))
                     i++;
@@ -149,41 +149,41 @@ public class WorldManager {
     }
 
 
-    public HoneyfrostWorld newWorld(){
+    public ConfigurableWorld newWorld(){
         return newWorld(null, null);
     }
 
-    public HoneyfrostWorld newWorld(Map<String, Object> map){
+    public ConfigurableWorld newWorld(Map<String, Object> map){
         return newWorld(map, null);
     }
 
-    public HoneyfrostWorld newWorld(Map<String, Object> map, String name){
-        HoneyfrostWorld hw = (map != null ? new HoneyfrostWorld(map, name) : new HoneyfrostWorld());
+    public ConfigurableWorld newWorld(Map<String, Object> map, String name){
+        ConfigurableWorld hw = (map != null ? new ConfigurableWorld(map, name) : new ConfigurableWorld());
         worldList.add(hw);
         return hw;
     }
 
-    public List<HoneyfrostWorld> getWorldList() {
+    public List<ConfigurableWorld> getWorldList() {
         return worldList;
     }
 
-    public HoneyfrostWorld getWorld(String worldID){
-        for(HoneyfrostWorld world : worldList)
+    public ConfigurableWorld getWorld(String worldID){
+        for(ConfigurableWorld world : worldList)
             if(world.getFileWorldName().equals(worldID))
                 return world;
             return null;
     }
 
-    public HoneyfrostWorld getWorld(World w){
-        for(HoneyfrostWorld world : worldList)
+    public ConfigurableWorld getWorld(World w){
+        for(ConfigurableWorld world : worldList)
             if(world.getLoadedWorld() == w)
                 return world;
         return null;
     }
 
-    public List<HoneyfrostWorld> getUncategorizedWorlds(){
-        List<HoneyfrostWorld> worldList = new ArrayList<>();
-        for(HoneyfrostWorld world : this.worldList) {
+    public List<ConfigurableWorld> getUncategorizedWorlds(){
+        List<ConfigurableWorld> worldList = new ArrayList<>();
+        for(ConfigurableWorld world : this.worldList) {
             if (world.getProject() != null)
                     continue;
             worldList.add(world);

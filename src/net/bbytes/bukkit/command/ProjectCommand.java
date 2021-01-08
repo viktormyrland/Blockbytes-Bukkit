@@ -3,7 +3,7 @@ package net.bbytes.bukkit.command;
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIInventory;
 import net.bbytes.bukkit.message.Message;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,28 +17,28 @@ public class ProjectCommand implements CommandExecutor, TabCompleter{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(!sender.hasPermission("honeyfrost.user")){
-            sender.sendMessage(Message.NO_PERMISSION.get(sender));
-            return true;
-        }
+//        if(!sender.hasPermission("honeyfrost.user")){
+//            sender.sendMessage(Message.NO_PERMISSION.get(sender));
+//            return true;
+//        }
 
         if(!(sender instanceof Player)){
             sender.sendMessage("§cOnly executable by player");
             return true;
         }
 
-        HoneyfrostWorld honeyfrostWorld = Main.getInstance().getWorldManager().getWorld(((Player) sender).getWorld());
+        ConfigurableWorld configurableWorld = Main.getInstance().getWorldManager().getWorld(((Player) sender).getWorld());
 
-        if(honeyfrostWorld == null){
+        if(configurableWorld == null){
             sender.sendMessage(Message.ERROR_NOT_IN_PROJECT_WORLD.get(sender));
             return true;
         }
-        else if(honeyfrostWorld.getProjectID() == null){
+        else if(configurableWorld.getProjectID() == null){
             sender.sendMessage(Message.ERROR_NOT_IN_PROJECT_WORLD.get(sender));
             return true;
         }
 
-        GUIInventory.PROJECT_OVERVIEW.display(((Player) sender), honeyfrostWorld.getProjectID().toString(), 1);
+        GUIInventory.PROJECT_OVERVIEW.display(((Player) sender), configurableWorld.getProjectID().toString(), 1);
 
         return true;
     }

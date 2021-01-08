@@ -5,7 +5,7 @@ import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +51,7 @@ public class ProjectListInventory extends BaseInventory {
                 "§2§l» §a" + Message.PROJECTS_SPAWN_GO.get(p)
         }), 1, 1);
 
-        if(p.hasPermission("honeyfrost.projects.new"))
+        if(p.hasPermission("bbytes.admin"))
             setItem(inv, itemStackUtils.getItemStack(GUIItem.PROJECTS_NEW_PROJECT, Message.PROJECTS_NEW.get(p), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
                     "§8[§c" + Message.INFO_ADMIN_ONLY.get(p) + "§8]",
@@ -136,19 +136,19 @@ public class ProjectListInventory extends BaseInventory {
 
         itemStackList = new ArrayList<>();
 
-        for(HoneyfrostWorld honeyfrostWorld : user.getRecentWorlds()){
-            if(honeyfrostWorld.isRecycled())continue;
-            if(honeyfrostWorld.getProject() != null) if(!honeyfrostWorld.getProject().canAccess(p.getUniqueId()))continue;
-            item = itemStackUtils.getItemStack(honeyfrostWorld.getDisplayItem(), "§6" + honeyfrostWorld.getDisplayname(), new String[]{
+        for(ConfigurableWorld configurableWorld : user.getRecentWorlds()){
+            if(configurableWorld.isRecycled())continue;
+            if(configurableWorld.getProject() != null) if(!configurableWorld.getProject().canAccess(p.getUniqueId()))continue;
+            item = itemStackUtils.getItemStack(configurableWorld.getDisplayItem(), "§6" + configurableWorld.getDisplayname(), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
-                    "§8§l» §7" + Message.WORD_PROJECT.get(p) + ": §b" + (honeyfrostWorld.getProject() != null ? honeyfrostWorld.getProject().getName() : Message.WORD_NONE.get(p)),
+                    "§8§l» §7" + Message.WORD_PROJECT.get(p) + ": §b" + (configurableWorld.getProject() != null ? configurableWorld.getProject().getName() : Message.WORD_NONE.get(p)),
                     "",
                     "§2§l» §a" + Message.CLICK_TRAVEL.get(p),
                     "§2§l» §a"+ Message.CLICK_SHIFT_EDIT.get(p)
             });
 
             item = applyGUIItem(item, GUIItem.WORLD_PLACEHOLDER);
-            item = setNBT(item, "worldID", honeyfrostWorld.getFileWorldName());
+            item = setNBT(item, "worldID", configurableWorld.getFileWorldName());
             itemStackList.add(item);
 
             if(itemStackList.size() >= 7)break;

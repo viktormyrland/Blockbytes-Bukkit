@@ -25,7 +25,7 @@ public class WorldUploader {
         File DESTINATION_FOLDER = null;
 
         try {
-            URL FILE_URL = new URL("https://upload.honeyfrost.net/uploads/" + id + ".zip");
+            URL FILE_URL = new URL("https://upload.bbytes.net/uploads/" + id + ".zip");
             DESTINATION = new File(Main.getInstance().getDataFolder() + "/uploads/" + id + ".zip");
 
             DESTINATION.getParentFile().mkdirs();
@@ -46,7 +46,7 @@ public class WorldUploader {
                 return Response.INVALID_WORLD;
             }
 
-            String worldID = HoneyfrostWorld.generateRandomName();
+            String worldID = ConfigurableWorld.generateRandomName();
             this.world = worldID;
 
             // moving the world folder

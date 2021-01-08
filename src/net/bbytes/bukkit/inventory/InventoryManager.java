@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryManager {
 
-    public static final String ITEM_KEY_NAME = "HoneyfrostItem";
+    public static final String ITEM_KEY_NAME = "BlockbytesItem";
 
 
     public InventoryManager(){
@@ -71,7 +71,7 @@ public class InventoryManager {
 
     public GUIInventory getGUIInventory(Inventory inv){
         for(int i = 0; i < inv.getSize(); i++){
-            String str = (String) Main.getInstance().getWrapper().getNBT(inv.getItem(i), "HoneyfrostGUI");
+            String str = (String) Main.getInstance().getWrapper().getNBT(inv.getItem(i), "BlockbytesGUI");
             if(str != null){
                 GUIInventory guiInventory = GUIInventory.get(str);
                 return guiInventory;
@@ -135,7 +135,7 @@ public class InventoryManager {
         for(int i = 0; i < inv.getSize(); i++)
             if(inv.getItem(i) != null)
                 if(inv.getItem(i).getType() != Material.AIR){
-                    inv.setItem(i, Main.getInstance().getWrapper().setNBT(inv.getItem(i), "HoneyfrostGUI", guiInventory.name()));
+                    inv.setItem(i, Main.getInstance().getWrapper().setNBT(inv.getItem(i), "BlockbytesGUI", guiInventory.name()));
                     break;
                 }
 

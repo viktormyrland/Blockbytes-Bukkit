@@ -4,7 +4,7 @@ import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -52,7 +52,7 @@ public class ProjectOverviewInventory extends BaseInventory {
                 "§2§l» §a" + getMessage(Message.CLICK_NEW_WORLD)
         }), 1, 7);
 
-        if(p.hasPermission("honeyfrost.projects.edit"))
+        if(p.hasPermission("bbytes.admin"))
             setItem(inv, itemStackUtils.getItemStack(GUIItem.PROJECT_EDIT, getMessage(Message.EDIT_PROJECT), new String[]{
                     Message.FORMAT_DIVIDER.getRaw(),
                     "§8[§c" + getMessage(Message.INFO_ADMIN_ONLY) + "§8]",
@@ -74,7 +74,7 @@ public class ProjectOverviewInventory extends BaseInventory {
 
         for(int i = 0; i < 21; i++){
             if(i+((page-1)*21) >= project.getWorlds().size()) break;
-            HoneyfrostWorld world = project.getWorlds().get(((page-1)*21) + i);
+            ConfigurableWorld world = project.getWorlds().get(((page-1)*21) + i);
             if(world == null) break;
 
             item = itemStackUtils.getItemStack(world.getDisplayItem(), "§6" + world.getDisplayname(), new String[]{

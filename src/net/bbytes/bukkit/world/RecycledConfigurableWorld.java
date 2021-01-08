@@ -4,7 +4,7 @@ import net.bbytes.bukkit.Main;
 
 import java.util.Map;
 
-public class RecycledHoneyfrostWorld extends HoneyfrostWorld{
+public class RecycledConfigurableWorld extends ConfigurableWorld {
 
     private long recycled = 0;
     private String recycledBy = "Unknown";
@@ -17,7 +17,7 @@ public class RecycledHoneyfrostWorld extends HoneyfrostWorld{
         this.recycled = recycled;
     }
 
-    public RecycledHoneyfrostWorld(Map<String, Object> map, String name) {
+    public RecycledConfigurableWorld(Map<String, Object> map, String name) {
         super(map, name);
         if(map.containsKey("recycled"))  this.recycled = ((Number) map.get("recycled")).longValue();
         if(map.containsKey("recycledBy"))  this.recycledBy = (String) map.get("recycledBy");

@@ -386,7 +386,7 @@ public class WorkCommand implements CommandExecutor,TabCompleter{
 		sender.sendMessage(" §7- §a/work stats §7- Show statistics");
 		sender.sendMessage(" §7- §a/work generalstats §7- Show statistics");
 		
-		if(sender.hasPermission("honeyfrost.admin")) {
+		if(sender.hasPermission("bbytes.admin")) {
 			sender.sendMessage(" ");
 			sender.sendMessage("§c§lAdmin Commands:");
 			sender.sendMessage(" §7- §c/work stats <player> §7- Show statistics for a player");
@@ -404,7 +404,7 @@ public class WorkCommand implements CommandExecutor,TabCompleter{
 			list.add("stop");
 			list.add("stats");
 			list.add("generalstats");
-		}else if(args.length == 2 && sender.hasPermission("honeyfrost.admin")) {
+		}else if(args.length == 2 && sender.hasPermission("bbytes.admin")) {
 			for(Player all : Bukkit.getOnlinePlayers())
 				list.add(all.getName());
 		}

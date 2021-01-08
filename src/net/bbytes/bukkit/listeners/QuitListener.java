@@ -6,6 +6,7 @@ import net.bbytes.bukkit.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.sql.SQLException;
@@ -16,13 +17,6 @@ public class QuitListener implements Listener{
 	
 	Essentials es = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
 
-	@EventHandler
-	public void notifyConnector(PlayerQuitEvent e){
-		Main.getInstance().getBbConnector().sendData(0x05, new Object[]{
-				e.getPlayer().getName(),
-				"QUIT"
-		});
-	}
 	@EventHandler
 	public void removeUserObject(PlayerQuitEvent e){
 
@@ -51,6 +45,11 @@ public class QuitListener implements Listener{
 		}
 
 		e.getPlayer().setOp(false);
+	}
+
+	@EventHandler
+	public void announce(PlayerQuitEvent e) {
+		e.setQuitMessage("§8[§c§l-§8] §c" + e.getPlayer().getName());
 	}
 
 	

@@ -4,7 +4,7 @@ import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.project.Project;
 import net.bbytes.bukkit.user.User;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class MemberCommand implements CommandExecutor,TabCompleter, Listener {
 		if(!(sender instanceof Player)){
 			return true;
 		}
-		if(!sender.hasPermission("honeyfrost.manager")) {
+		if(!sender.hasPermission("bbytes.admin")) {
 			sender.sendMessage(Message.NO_PERMISSION.get(sender));
 			return true;
 		}
@@ -42,7 +42,7 @@ public class MemberCommand implements CommandExecutor,TabCompleter, Listener {
 				sender.sendMessage("§c" + Message.ACCESS_GIVE.get(sender));
 				return true;
 			}
-			HoneyfrostWorld world = HoneyfrostWorld.getWorld(((Player) sender).getWorld().getName());
+			ConfigurableWorld world = ConfigurableWorld.getWorld(((Player) sender).getWorld().getName());
 
 			if(world == null){
 				sender.sendMessage(Message.ERROR_NOT_IN_PROJECT.get(sender));
@@ -69,7 +69,7 @@ public class MemberCommand implements CommandExecutor,TabCompleter, Listener {
 				sender.sendMessage("§c" + Message.ACCESS_REVOKE.get(sender));
 				return true;
 			}
-			HoneyfrostWorld world = HoneyfrostWorld.getWorld(((Player) sender).getWorld().getName());
+			ConfigurableWorld world = ConfigurableWorld.getWorld(((Player) sender).getWorld().getName());
 
 			if(world == null){
 				sender.sendMessage(Message.ERROR_NOT_IN_PROJECT.get(sender));
@@ -113,7 +113,7 @@ public class MemberCommand implements CommandExecutor,TabCompleter, Listener {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 
 		List<String> list = new ArrayList<String>();
-		if(sender.hasPermission("honeyfrost.manager"))
+		if(sender.hasPermission("bbytes.admin"))
 			if(args.length == 1) {
 				list.add("give");
 				list.add("revoke");

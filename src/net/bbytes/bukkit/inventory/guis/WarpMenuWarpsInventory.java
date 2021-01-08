@@ -3,7 +3,7 @@ package net.bbytes.bukkit.inventory.guis;
 import net.bbytes.bukkit.inventory.GUIItem;
 import net.bbytes.bukkit.message.Message;
 import net.bbytes.bukkit.warp.Warp;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +24,7 @@ public class WarpMenuWarpsInventory extends BaseInventory {
         int page = (int) options[1];
         Inventory inv = createInventory(6, getMessage(Message.WARP_MENU_TITLE));
 
-        HoneyfrostWorld world = HoneyfrostWorld.getWorld(worldID);
+        ConfigurableWorld world = ConfigurableWorld.getWorld(worldID);
 
         ItemStack item = itemStackUtils.getItemStack(world.getDisplayItem(), world.getDisplayname(), new String[]{
                 Message.FORMAT_DIVIDER.getRaw(),

@@ -28,6 +28,7 @@ commands:
     aliases: [projects, proj, w, mvtp, mvlist, mv, goto]
   settings:
     description: Change World Settings for the current world.
+    aliases: [gamerule]
   project:
     description: Browse the project you are currently in
   exportyml:
@@ -49,8 +50,6 @@ commands:
     description: Information about your current world
   reconnect:
     description: Reconnect to Blockbytes Transfer
-  gamerule:
-    description: Deprecated
   maintenance:
     description: Admin command
   forcesave:

@@ -73,6 +73,14 @@ public class HFConnector {
 
     }
     public void sendData(int b, List<Object> dataInput){
+        if(true){
+            System.out.println("Attempted to send data through deprecated HFConnector.");
+            System.out.println("Data:");
+            for(Object o : dataInput){
+                System.out.println(o.toString());
+            }
+            return;
+        }
         final List<Object> finalDataInput = dataInput;
         ExecutorService ex = Executors.newSingleThreadExecutor();
         ex.execute(() -> {

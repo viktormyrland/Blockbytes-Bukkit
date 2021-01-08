@@ -130,14 +130,14 @@ public class ItemStackUtils {
 	}
 
 	public String serializeItemStack(ItemStack item){
-		return item.getType().name() + ";" + item.getAmount() + ";" + item.getDurability() + ";";
+		return item.getType().name() + "|" + item.getAmount() + "|" + item.getDurability() + "|";
 	}
 
 	public ItemStack deserializeItemStack(String str, boolean legacy){
-		ItemStack item = new ItemStack(Main.getInstance().getWrapper().getMaterial(str.split(";")[0], legacy));
-		item.setAmount(Integer.parseInt(str.split(";")[1]));
+		ItemStack item = new ItemStack(Main.getInstance().getWrapper().getMaterial(str.split("\\|")[0], legacy));
+		item.setAmount(Integer.parseInt(str.split("\\|")[1]));
 		if(!Main.getInstance().CLIENTNAME.equals("BUILD16"))
-			item.setDurability(Short.parseShort(str.split(";")[2]));
+			item.setDurability(Short.parseShort(str.split("\\|")[2]));
 		return item;
 	}
 

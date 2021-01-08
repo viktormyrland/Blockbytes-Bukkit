@@ -2,7 +2,7 @@ package net.bbytes.bukkit.project;
 
 import net.bbytes.bukkit.Main;
 import net.bbytes.bukkit.warp.Warp;
-import net.bbytes.bukkit.world.HoneyfrostWorld;
+import net.bbytes.bukkit.world.ConfigurableWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,6 +34,7 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
     public String getProjectManager() {
@@ -42,11 +43,12 @@ public class Project {
 
     public void setProjectManager(String projectManager) {
         this.projectManager = projectManager;
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
-    public List<HoneyfrostWorld> getWorlds() {
-        List<HoneyfrostWorld> returnList = new ArrayList<>();
-        for(HoneyfrostWorld world : Main.getInstance().getWorldManager().getWorldList())
+    public List<ConfigurableWorld> getWorlds() {
+        List<ConfigurableWorld> returnList = new ArrayList<>();
+        for(ConfigurableWorld world : Main.getInstance().getWorldManager().getWorldList())
             if(world.getProjectID() != null)
                 if(world.getProjectID().toString().equals(uuid.toString()))
                     returnList.add(world);
@@ -100,6 +102,7 @@ public class Project {
 
     public void setDisplayItem(ItemStack displayItem) {
         this.displayItem = displayItem;
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
     public List<UUID> getMemberList() {
@@ -114,7 +117,7 @@ public class Project {
 
         Player player = Bukkit.getPlayer(uuid);
         if(player != null){
-            if(player.hasPermission("honeyfrost.trusted"))
+            if(player.hasPermission("bbytes.trusted"))
                 return true;
         }
         return false;
@@ -124,6 +127,7 @@ public class Project {
         memberList.removeIf(u -> uuid.toString().equals(u.toString()));
         memberList.add(uuid);
         Main.getInstance().getMySQLManager().mysql.update("REPLACE INTO AccessList (UUID, Project) VALUES ('" + uuid+"', '" + this.uuid + "');");
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
     public void removeMember(UUID uuid){
@@ -132,7 +136,7 @@ public class Project {
                 "UUID='" + uuid + "' AND Project='" +this.uuid + "';");
         Player p = Bukkit.getPlayer(uuid);
         if(p != null){
-            HoneyfrostWorld world = HoneyfrostWorld.getWorld(p.getWorld().getName());
+            ConfigurableWorld world = ConfigurableWorld.getWorld(p.getWorld().getName());
             if(world != null){
                 if(world.getProject() != null) if(world.getProject() == this){
                     if(!this.canAccess(uuid)){
@@ -143,13 +147,14 @@ public class Project {
                 }
             }
         }
+        Main.getInstance().getRedisManager().publishMessage("UPDATE_PROJECTS", "");
     }
 
     public List<Warp> getWarpsInProject(){
         List<Warp> warpList = new ArrayList<>();
         for(Warp warp : Main.getInstance().getWarpManager().getWarpList())
-            if(warp.getHoneyfrostWorld() != null)
-                if(warp.getHoneyfrostWorld().getProject() == this) {
+            if(warp.getConfigurableWorld() != null)
+                if(warp.getConfigurableWorld().getProject() == this) {
                     warpList.add(warp);
                 }
         return warpList;

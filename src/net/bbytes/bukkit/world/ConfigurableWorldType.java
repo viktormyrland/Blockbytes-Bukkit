@@ -1,6 +1,6 @@
 package net.bbytes.bukkit.world;
 
-public enum HoneyfrostWorldType {
+public enum ConfigurableWorldType {
 
     NORMAL,FLAT,VOID
 }

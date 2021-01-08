@@ -123,24 +123,26 @@ public class Main extends JavaPlugin {
         f3NPerm = new F3NFixManager();
         userManager = new UserManager();
         worldManager = new WorldManager();
-       // bbConnector = new HFConnector();
+        bbConnector = new HFConnector();
         backupManager = new BackupManager();
         redisManager = new RedisManager();
 
         redisManager.connectToRedis();
+        redisManager.registerMessageReceiver(redisManager);
+        redisManager.subscribeToChannel("TRANSFER_SUCCESSFUL", "PLAYERMSG", "UPDATE_PROJECTS");
 
         registerCommand("worlds", WorldsCommand.class);
         registerCommand("reloadbb", ReloadBlockbytesCommand.class);
         registerCommand("prefix", PrefixCommand.class);
         registerCommand("/upload", UploadCommand.class);
         registerCommand("whitelist", WhitelistCommand.class);
-        registerCommand("rank", RankCommand.class);
-        registerCommand("language", LanguageCommand.class);
+//        registerCommand("rank", RankCommand.class);
+//        registerCommand("language", LanguageCommand.class);
         registerCommand("customblocks", CustomBlocksCommand.class);
         registerCommand("2fa", TwoFactorCommand.class);
         registerCommand("settings", SettingsCommand.class);
         registerCommand("project", ProjectCommand.class);
-        registerCommand("exportyml", ExportYml.class);
+//        registerCommand("exportyml", ExportYml.class);
         registerCommand("warp", WarpCommand.class);
         registerCommand("warps", WarpsCommand.class);
         registerCommand("setwarp", SetWarpCommand.class);
@@ -148,10 +150,10 @@ public class Main extends JavaPlugin {
         registerCommand("member", MemberCommand.class);
         registerCommand("world", WorldCommand.class);
         registerCommand("info", InfoCommand.class);
-        registerCommand("reconnect", ReconnectCommand.class);
-        registerCommand("gamerule", GameruleCommand.class);
+//        registerCommand("reconnect", ReconnectCommand.class);
+//        registerCommand("gamerule", GameruleCommand.class);
         registerCommand("maintenance", MaintenanceCommand.class);
-        registerCommand("work", WorkCommand.class);
+//        registerCommand("work", WorkCommand.class);
         registerCommand("forcesave", ForceSaveCommand.class);
 
         registerEvents(new Class<?>[]{
@@ -172,6 +174,8 @@ public class Main extends JavaPlugin {
         mySQLManager = new MySQLManager();
         mySQLManager.connectToMySQL();
         mySQLManager.setupDefaultTables();
+
+        PrefixCommand.updateCache();
 
 
 
@@ -231,7 +235,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        bbConnector.disconnect();
+//        bbConnector.disconnect();
         worldManager.saveWorlds();
         worldManager.getRecycleBin().saveRecycleBin();
         warpManager.saveWarps();
